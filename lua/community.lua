@@ -6,21 +6,15 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  -- lang
   { import = "astrocommunity.pack.lua" },
+  { import = "astrocommunity.pack.vue" },
+
+  -- visual
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
 
-  {
-    import = "astrocommunity.completion.copilot-lua",
-    opts = {
-      suggestion = {
-        enabled = true,
-        keymap = {
-          accept = "<S-D-Space>",
-          accept_word = "<D-Right>",
-        },
-      },
-    },
-  },
-  -- import/override with your plugins folder
+  -- functional
+  { import = "astrocommunity.motion.leap-nvim" },
+  { import = "astrocommunity.completion.copilot-lua" },
 }

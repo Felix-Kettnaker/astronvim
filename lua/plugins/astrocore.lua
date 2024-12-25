@@ -50,8 +50,6 @@ return {
         signcolumn = "yes",
         wrap = false,
         clipboard = "", -- dd doesnt overwrite + register
-        smartindent = true,
-        autoindent = true,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -99,11 +97,15 @@ return {
         ["ü"] = { "%", desc = "Jump to matching bracket" },
 
         -- move lines
-        ["∆"] = { function() vim.cmd "normal! ddkP" end, desc = "Move line up" },
-        ["º"] = { function() vim.cmd "normal! ddp" end, desc = "Move line down" },
+        ["∆"] = { function() vim.cmd "normal! ddkP" end, desc = "Move line up" }, -- option + k
+        ["º"] = { function() vim.cmd "normal! ddp" end, desc = "Move line down" }, -- option + j
       }, sharedKeybinds),
 
-      i = merge({}, sharedKeybinds),
+      i = merge({
+        -- movement in insert mode
+        ["<D-Right>"] = { function() vim.cmd "normal! $" end, desc = "Move to end of line" },
+        ["<D-Left>"] = { function() vim.cmd "normal! ^" end, desc = "Move to start of line" },
+      }, sharedKeybinds),
 
       v = merge({
         -- copy/cut
@@ -114,7 +116,7 @@ return {
         ["<Tab>"] = { ">gv", desc = "Indent selection" },
         ["<S-Tab>"] = { "<gv", desc = "Unindent selection" },
 
-        -- move lines visual
+        -- move lines in visual line mode
         ["∆"] = { "dkPV']", desc = "Move line up" },
         ["º"] = { "dpV']", desc = "Move line down" },
       }, sharedKeybinds),
