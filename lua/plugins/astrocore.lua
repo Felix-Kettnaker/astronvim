@@ -95,8 +95,8 @@ return {
         ["P"] = { "P=']", desc = "Format pasted text" },
 
         -- paste yanked
-        ["<Leader>p"] = { '"0p', desc = "Paste from Yank register" },
-        ["<Leader>P"] = { '"0P', desc = "Paste from Yank register before cursor" },
+        -- ["<Leader>p"] = { '"0p', desc = "Paste from Yank register" },
+        -- ["<Leader>P"] = { '"0P', desc = "Paste from Yank register before cursor" },
 
         -- swap jump repeat (, & ;)
         [";"] = { ",", desc = "Swap ; and ," },
