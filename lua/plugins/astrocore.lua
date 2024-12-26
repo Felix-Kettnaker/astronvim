@@ -94,10 +94,6 @@ return {
         ["p"] = { "p=']", desc = "Format pasted text" },
         ["P"] = { "P=']", desc = "Format pasted text" },
 
-        -- paste yanked
-        -- ["<Leader>p"] = { '"0p', desc = "Paste from Yank register" },
-        -- ["<Leader>P"] = { '"0P', desc = "Paste from Yank register before cursor" },
-
         -- swap jump repeat (, & ;)
         [";"] = { ",", desc = "Swap ; and ," },
         [","] = { ";", desc = "Swap , and ;" },
@@ -110,6 +106,16 @@ return {
         -- move lines
         ["∆"] = { function() vim.cmd "normal! ddkP" end, desc = "Move line up" }, -- option + k
         ["º"] = { function() vim.cmd "normal! ddp" end, desc = "Move line down" }, -- option + j
+
+        -- toggleterm
+        ["<Leader>ti"] = {
+          function()
+            vim.cmd "1ToggleTerm direction=horizontal name=runApp"
+            vim.cmd "2ToggleTerm direction=vertical name=commands"
+            vim.cmd "ToggleTerm"
+          end,
+          desc = "Init double term layout",
+        },
       }, sharedKeybinds),
 
       i = merge({
