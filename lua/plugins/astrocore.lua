@@ -49,7 +49,17 @@ return {
         spell = false,
         signcolumn = "yes",
         wrap = false,
+
         clipboard = "", -- dd doesnt overwrite + register
+        list = true,
+        listchars = {
+          space = "⋅",
+          tab = "» ",
+          trail = "•",
+          extends = "❯",
+          precedes = "❮",
+          nbsp = "␣",
+        },
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)

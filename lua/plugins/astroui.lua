@@ -14,8 +14,10 @@ return {
     highlights = {
       init = { -- this table overrides highlights in all themes
         -- Normal = { bg = "#000000" },
-        -- Comment = { fg = "#666688" },
-        CopilotSuggestion = { fg = "#94b49d" },
+        Comment = { fg = "#8585a4", bg = "#27273b" },
+        CopilotSuggestion = { fg = "#a4b9aa" },
+        LineNr = { fg = "#676b85" },
+        Whitespace = { fg = "#676b85" },
       },
       astrodark = { -- a table of overrides/changes when applying the astrotheme theme
         -- Normal = { bg = "#000000" },

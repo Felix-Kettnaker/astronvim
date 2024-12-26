@@ -19,4 +19,13 @@ return {
       },
     },
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    opts = {
+      enabled = true,
+      scope = {
+        enabled = true,
+      },
+    },
+  },
 }
