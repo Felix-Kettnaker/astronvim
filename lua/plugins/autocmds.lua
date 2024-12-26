@@ -26,14 +26,18 @@ return {
           {
             event = { "BufEnter", "FocusGained", "InsertLeave", "WinEnter", "CmdlineLeave" },
             desc = "Enable relative numbers in all modes but insert/command",
-            callback = function() vim.opt.relativenumber = true end,
+            callback = function()
+              if vim.bo.filetype ~= "neo-tree" then vim.opt.relativenumber = true end
+            end,
           },
           {
             event = { "BufLeave", "FocusLost", "InsertEnter", "WinLeave", "CmdlineEnter" },
             desc = "Enable relative line numbers in insert/command mode and redraw screen to apply",
             callback = function()
-              vim.opt.relativenumber = false
-              vim.cmd "redraw"
+              if vim.bo.filetype ~= "neo-tree" then
+                vim.opt.relativenumber = false
+                vim.cmd "redraw"
+              end
             end,
           },
         },

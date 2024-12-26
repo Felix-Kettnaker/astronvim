@@ -53,12 +53,12 @@ return {
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
-        -- NOTE, `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
+        -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
       },
     },
     -- Mappings can be configured through AstroCore as well.
-    -- NOTE, keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
+    -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     -- tables with just a `desc` key will be registered with which-key if it's installed
     -- this is useful for naming menus
     -- ["<Leader>b"] = { desc = "Buffers" },
@@ -78,6 +78,7 @@ return {
         },
         ["<Leader>bn"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["<Leader>bp"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+        ["<Leader>b<tab>"] = { function() vim.cmd "b#" end, desc = "Most recent buffer" },
 
         -- always format pasted text
         ["p"] = { "p=']", desc = "Format pasted text" },
@@ -105,6 +106,14 @@ return {
         -- movement in insert mode
         ["<D-Right>"] = { function() vim.cmd "normal! $" end, desc = "Move to end of line" },
         ["<D-Left>"] = { function() vim.cmd "normal! ^" end, desc = "Move to start of line" },
+        ["ﬂ"] = { function() vim.cmd "normal! w" end, desc = "Move to next word" },
+        ["Ó"] = { function() vim.cmd "normal! b" end, desc = "Move to previous word" },
+
+        -- deletion in insert mode
+        ["<D-Backspace>"] = { function() vim.cmd "normal! d^" end, desc = "Delete to start of line" },
+        ["<D-Delete>"] = { function() vim.cmd "normal! d$" end, desc = "Delete to end of line" },
+        ["<S-C-Backspace>"] = { function() vim.cmd "normal! db" end, desc = "Delete word backwards" },
+        ["<S-C-Delete>"] = { function() vim.cmd "normal! dw" end, desc = "Delete word forwards" },
       }, sharedKeybinds),
 
       v = merge({
