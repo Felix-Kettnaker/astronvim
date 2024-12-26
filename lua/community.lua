@@ -6,14 +6,26 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
-  -- lang
+  -- lang (general)
   { import = "astrocommunity.pack.lua" },
+  { import = "astrocommunity.pack.yaml" },
+  { import = "astrocommunity.pack.toml" },
+  { import = "astrocommunity.pack.xml" },
+  { import = "astrocommunity.pack.go" },
+  { import = "astrocommunity.pack.sql" },
+  -- specific
+  { import = "astrocommunity.pack.html-css" },
+  { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.vue" },
+  { import = "astrocommunity.pack.java" },
+  { import = "astrocommunity.pack.kotlin" },
+  { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.pack.godot" },
+  { import = "astrocommunity.pack.rust" },
 
   -- visual
   { import = "astrocommunity.colorscheme.catppuccin" },
-  { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
-  { import = "astrocommunity.indent.indent-blankline-nvim" },
+  { import = "astrocommunity.pack.rainbow-delimiter-indent-blankline" },
 
   -- functional
   { import = "astrocommunity.comment.ts-comments-nvim" },
