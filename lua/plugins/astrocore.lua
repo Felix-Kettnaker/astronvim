@@ -110,12 +110,21 @@ return {
         -- toggleterm
         ["<Leader>ti"] = {
           function()
-            vim.cmd "1ToggleTerm direction=horizontal name=runApp"
-            vim.cmd "2ToggleTerm direction=vertical name=commands"
+            vim.cmd "1ToggleTerm direction=horizontal name=commands"
+            vim.cmd "2ToggleTerm direction=vertical name=runApp"
             vim.cmd "ToggleTerm"
           end,
           desc = "Init double term layout",
         },
+        -- git with toggletermr
+        ["<Leader>ge"] = { desc = "Execute a predefined git command" },
+        ["<Leader>gec"] = {
+          function() vim.cmd "TermExec cmd='git commit -a' go_back=0" end,
+          desc = " Commit with message",
+        },
+        ["<Leader>gel"] = { function() vim.cmd "TermExec cmd='git pull --rebase'" end, desc = "󰇚 Pull with rebase" },
+        ["<Leader>geL"] = { function() vim.cmd "TermExec cmd='git pull'" end, desc = "󰇚 Pull" },
+        ["<Leader>ges"] = { function() vim.cmd "TermExec cmd='git push'" end, desc = "󰕒 Push" },
       }, sharedKeybinds),
 
       i = merge({
