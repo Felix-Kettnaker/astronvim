@@ -11,6 +11,7 @@ return {
     opts = {
       ensure_installed = {
         "lua_ls",
+        "rust_analyzer",
         -- add more arguments for adding more language servers
       },
     },

@@ -7,6 +7,18 @@ local function merge(t1, t2)
   end
   return t1
 end
+
+local function formatDiagnostic(diagnostic)
+  -- local cursorLine = vim.api.nvim_win_get_cursor(0)[1]
+  -- if cursorLine >= diagnostic.lnum - 1 and cursorLine <= diagnostic.end_lnum + 1 then
+  -- Diagnostic is in current line
+  return diagnostic.message:sub(0, 64) .. (string.len(diagnostic.message) > 64 and "..." or "")
+  -- end
+
+  -- return diagnostic.message
+end
+
+-------------------------------------------------------- all modes --------------------------------------------------------
 local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
   ["<S-C-Tab>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
@@ -39,7 +51,7 @@ return {
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
       -- update_in_insert = false,
-      virtual_text = { virt_text_pos = "right_align", suffix = "  " },
+      virtual_text = { virt_text_pos = "right_align", suffix = "  ", format = formatDiagnostic },
     },
     -- vim options can be configured here
     options = {
@@ -62,20 +74,12 @@ return {
         },
       },
       g = { -- vim.g.<key>
-        -- configure global vim variables (vim.g)
-        -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
-        -- This can be found in the `lua/lazy_setup.lua` file
       },
     },
-    -- Mappings can be configured through AstroCore as well.
-    -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
-    -- tables with just a `desc` key will be registered with which-key if it's installed
-    -- this is useful for naming menus
-    -- ["<Leader>b"] = { desc = "Buffers" },
     -- setting a mapping to false will disable it
     -- ["<C-S>"] = false,
     mappings = {
-      -- first key is the mode
+      -------------------------------------------------------- normal --------------------------------------------------------
       n = merge({
         -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
@@ -89,6 +93,8 @@ return {
         ["<Leader>bn"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["<Leader>bp"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
         ["<Leader>b<tab>"] = { function() vim.cmd "b#" end, desc = "Most recent buffer" },
+
+        ["F2"] = { function() vim.cmd "normal! <Leader>lr" end, desc = "Rename symbol" },
 
         -- always format pasted text
         ["p"] = { "p=']", desc = "Format pasted text" },
@@ -125,14 +131,18 @@ return {
         ["<Leader>gel"] = { function() vim.cmd "TermExec cmd='git pull --rebase'" end, desc = "󰇚 Pull with rebase" },
         ["<Leader>geL"] = { function() vim.cmd "TermExec cmd='git pull'" end, desc = "󰇚 Pull" },
         ["<Leader>ges"] = { function() vim.cmd "TermExec cmd='git push'" end, desc = "󰕒 Push" },
+
+        -- copilot
+        ["<Leader>uo"] = { function() require("copilot.suggestion").toggle_auto_trigger() end, desc = "Toggle Copilot" },
       }, sharedKeybinds),
 
+      -------------------------------------------------------- insert --------------------------------------------------------
       i = merge({
         -- movement in insert mode
         ["<D-Right>"] = { function() vim.cmd "normal! $" end, desc = "Move to end of line" },
         ["<D-Left>"] = { function() vim.cmd "normal! ^" end, desc = "Move to start of line" },
-        ["ﬂ"] = { function() vim.cmd "normal! w" end, desc = "Move to next word" },
-        ["Ó"] = { function() vim.cmd "normal! b" end, desc = "Move to previous word" },
+        ["ﬂ"] = { function() vim.cmd "normal! w" end, desc = "Move to next word" }, -- option + shift + l
+        ["Ó"] = { function() vim.cmd "normal! b" end, desc = "Move to previous word" }, -- option + shift + h
 
         -- deletion in insert mode
         ["<D-Backspace>"] = { function() vim.cmd "normal! d^" end, desc = "Delete to start of line" },
@@ -141,6 +151,7 @@ return {
         ["<S-C-Delete>"] = { function() vim.cmd "normal! dw" end, desc = "Delete word forwards" },
       }, sharedKeybinds),
 
+      -------------------------------------------------------- visual --------------------------------------------------------
       v = merge({
         -- copy/cut
         ["<D-c>"] = { '"+y', desc = "Copy to clipboard" },
@@ -151,8 +162,8 @@ return {
         ["<S-Tab>"] = { "<gv", desc = "Unindent selection" },
 
         -- move lines in visual line mode
-        ["∆"] = { "dkPV']", desc = "Move line up" },
-        ["º"] = { "dpV']", desc = "Move line down" },
+        ["∆"] = { "dkPV']", desc = "Move lines up" }, -- option k
+        ["º"] = { "dpV']", desc = "Move lines down" }, -- option j
       }, sharedKeybinds),
     },
   },
