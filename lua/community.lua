@@ -22,7 +22,6 @@ return {
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.godot" },
   { import = "astrocommunity.pack.rust" },
-  { import = "astrocommunity.pack.nim" },
 
   -- visual
   { import = "astrocommunity.colorscheme.catppuccin" },

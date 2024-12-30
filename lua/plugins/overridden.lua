@@ -7,8 +7,8 @@ return {
         keymap = {
           accept = "<C-D-Space>",
           accept_word = "<D-Right>",
-          next = "<C-D-.",
-          prev = "<C-D-,",
+          next = "<C-D-.>",
+          prev = "<C-D-,>",
         },
       },
     },
