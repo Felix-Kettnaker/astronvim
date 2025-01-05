@@ -26,7 +26,7 @@ local sharedKeybinds = {
   ["<D-f>"] = { "/", desc = "Find in buffer" },
   ["<D-F>"] = { ":Telescope live_grep<CR>", desc = "Find in files" },
   ["<D-p>"] = { ":Telescope find_files<CR>", desc = "Find file" },
-  ["<D-v>"] = { function() vim.cmd 'normal! "+P' end, desc = "Paste from clipboard" },
+  ["<D-v>"] = { function() vim.cmd 'normal! "+pl' end, desc = "Paste from clipboard" },
   ["<D-s>"] = { function() vim.cmd "w" end, desc = "Save file" },
   ["<D-z>"] = { function() vim.cmd "undo" end, desc = "Undo" },
   ["<D-y>"] = { function() vim.cmd "redo" end, desc = "Redo" },
@@ -122,6 +122,7 @@ return {
           end,
           desc = "Init double term layout",
         },
+
         -- git with toggletermr
         ["<Leader>ge"] = { desc = "Execute a predefined git command" },
         ["<Leader>gec"] = {
@@ -132,8 +133,9 @@ return {
         ["<Leader>geL"] = { function() vim.cmd "TermExec cmd='git pull'" end, desc = "󰇚 Pull" },
         ["<Leader>ges"] = { function() vim.cmd "TermExec cmd='git push'" end, desc = "󰕒 Push" },
 
-        -- copilot
+        -- plugin stuff
         ["<Leader>uo"] = { function() require("copilot.suggestion").toggle_auto_trigger() end, desc = "Toggle Copilot" },
+        ["<Leader>H"] = { function() vim.cmd "Alpha" end, desc = "Home Screen" },
       }, sharedKeybinds),
 
       -------------------------------------------------------- insert --------------------------------------------------------
@@ -165,6 +167,12 @@ return {
         ["∆"] = { "dkPV']", desc = "Move lines up" }, -- option k
         ["º"] = { "dpV']", desc = "Move lines down" }, -- option j
       }, sharedKeybinds),
+
+      t = {
+        ["<C-w>"] = { "<C-\\><C-n><C-w>", desc = "Window (from terminal)" },
+        ["<Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
+        ["<D-v>"] = { '<C-\\><C-n>"+pi', desc = "Paste from clipboard" },
+      },
     },
   },
 }

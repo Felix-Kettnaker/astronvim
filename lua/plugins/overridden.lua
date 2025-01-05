@@ -1,3 +1,4 @@
+local M = {}
 return {
   {
     "zbirenbaum/copilot.lua",
@@ -20,15 +21,24 @@ return {
         normal = "<Leader>s",
         normal_cur = "<Leader>sl",
         normal_line = "<Leader>sn", -- not really useful
-        normal_cur_line = "<Leader>sL",
+        normal_cur_line = "<Leader>sln",
         visual = "<Leader>s",
         visual_line = "<Leader>sn",
         delete = "<Leader>sd",
         change = "<Leader>sc",
         change_line = "<Leader>scn",
       },
-      highlight = {
-        duration = 0.3,
+      surrounds = {
+        ["/"] = {
+          add = { "/*", "*/" },
+          find = "/%*.-%*/",
+          delete = "^(%/%*)().-(%*%/)()$",
+        },
+        ["\\"] = {
+          add = { " /* ", " */ " },
+          find = " ?/%* ?.- ?%*/ ?",
+          delete = "^( ?/%* ?)().-( ?%*%/ ?)()$",
+        },
       },
     },
   },
