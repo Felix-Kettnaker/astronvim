@@ -170,7 +170,7 @@ return {
 
       t = {
         ["<C-w>"] = { "<C-\\><C-n><C-w>", desc = "Window (from terminal)" },
-        ["<Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
+        ["<Esc><Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
         ["<D-v>"] = { '<C-\\><C-n>"+pi', desc = "Paste from clipboard" },
       },
     },
