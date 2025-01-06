@@ -27,7 +27,13 @@ local sharedKeybinds = {
   ["<D-F>"] = { ":Telescope live_grep<CR>", desc = "Find in files" },
   ["<D-p>"] = { ":Telescope find_files<CR>", desc = "Find file" },
   ["<D-v>"] = { function() vim.cmd 'normal! "+pl' end, desc = "Paste from clipboard" },
-  ["<D-s>"] = { function() vim.cmd "w" end, desc = "Save file" },
+  ["<D-s>"] = {
+    function()
+      vim.api.nvim_input "<Esc>"
+      vim.cmd "w"
+    end,
+    desc = "Save file",
+  },
   ["<D-z>"] = { function() vim.cmd "undo" end, desc = "Undo" },
   ["<D-y>"] = { function() vim.cmd "redo" end, desc = "Redo" },
   ["<D-w>"] = { function() vim.cmd "bdelete" end, desc = "Close tab" },
