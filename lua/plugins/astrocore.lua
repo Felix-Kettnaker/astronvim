@@ -136,6 +136,14 @@ return {
         -- plugin stuff
         ["<Leader>uo"] = { function() require("copilot.suggestion").toggle_auto_trigger() end, desc = "Toggle Copilot" },
         ["<Leader>H"] = { function() vim.cmd "Alpha" end, desc = "Home Screen" },
+        ["<Leader>Ss"] = {
+          function()
+            local sessionName = vim.fn.input { prompt = "Session Name:" }
+            require("resession").save(sessionName)
+          end,
+          desc = "Save session",
+        },
+        ["<Leader>fH"] = { "<Cmd>Telescope harpoon marks<CR>", desc = "Find Harpoon Marks" },
       }, sharedKeybinds),
 
       -------------------------------------------------------- insert --------------------------------------------------------

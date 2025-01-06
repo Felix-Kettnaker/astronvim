@@ -4,7 +4,7 @@ return {
     "zbirenbaum/copilot.lua",
     opts = {
       suggestion = {
-        enabled = true,
+        auot_trigger = false,
         keymap = {
           accept = "<C-D-Space>",
           accept_word = "<D-Right>",
