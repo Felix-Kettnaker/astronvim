@@ -1,4 +1,3 @@
-local M = {}
 return {
   {
     "zbirenbaum/copilot.lua",
@@ -38,6 +37,19 @@ return {
           add = { " /* ", " */ " },
           find = " ?/%* ?.- ?%*/ ?",
           delete = "^( ?/%* ?)().-( ?%*%/ ?)()$",
+        },
+      },
+    },
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      window = {
+        mappings = {
+          ["a"] = false,
+          ["A"] = false,
+          ["n"] = { "add", config = { show_path = "none" } },
+          ["N"] = "add_directory",
         },
       },
     },

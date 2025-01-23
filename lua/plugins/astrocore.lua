@@ -24,9 +24,18 @@ local sharedKeybinds = {
   ["<S-C-Tab>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
   ["<D-a>"] = { "ggVG", desc = "Select all" },
   ["<D-f>"] = { "/", desc = "Find in buffer" },
-  ["<D-F>"] = { ":Telescope live_grep<CR>", desc = "Find in files" },
-  ["<D-p>"] = { ":Telescope find_files<CR>", desc = "Find file" },
-  ["<D-v>"] = { function() vim.cmd 'normal! "+pl' end, desc = "Paste from clipboard" },
+  ["<D-F>"] = { function() vim.cmd "Telescope live_grep" end, desc = "Find in files" },
+  ["<D-p>"] = { function() vim.cmd "Telescope find_files" end, desc = "Find file" },
+  ["<D-v>"] = {
+    function()
+      if vim.fn.mode() == "i" then
+        vim.api.nvim_input "<C-r>+"
+      else
+        vim.cmd 'normal! "+p'
+      end
+    end,
+    desc = "Paste from clipboard",
+  },
   ["<D-s>"] = {
     function()
       vim.api.nvim_input "<Esc>"
@@ -36,7 +45,14 @@ local sharedKeybinds = {
   },
   ["<D-z>"] = { function() vim.cmd "undo" end, desc = "Undo" },
   ["<D-y>"] = { function() vim.cmd "redo" end, desc = "Redo" },
-  ["<D-w>"] = { function() vim.cmd "bdelete" end, desc = "Close tab" },
+  ["<D-w>"] = {
+    function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      vim.cmd "bnext"
+      vim.api.nvim_buf_delete(bufnr, { force = false })
+    end,
+    desc = "Close tab",
+  },
   ["<F5>"] = { function() vim.cmd "AstroReload" end, desc = "Reload Workspace" },
 }
 
@@ -50,7 +66,7 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      diagnostics_mode = 2, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
@@ -102,9 +118,19 @@ return {
 
         ["F2"] = { function() vim.cmd "normal! <Leader>lr" end, desc = "Rename symbol" },
 
-        -- always format pasted text
-        ["p"] = { "p=']", desc = "Format pasted text" },
-        ["P"] = { "P=']", desc = "Format pasted text" },
+        -- mappings for "language"
+        ["<Leader>lt"] = {
+          function()
+            local filetype = vim.fn.input { prompt = "enter Filetype:" }
+            if filetype == "" then return end
+            vim.cmd("set filetype=" .. filetype)
+          end,
+          desc = "Set filetype of buffer",
+        },
+        ["<Leader>lp"] = { "=']", desc = "Reindent pasted text" },
+
+        -- some mapping redundancy
+        ["<Leader>bf"] = { function() vim.cmd "Telescope buffers" end, desc = "Find buffers" },
 
         -- swap jump repeat (, & ;)
         [";"] = { ",", desc = "Swap ; and ," },
@@ -145,15 +171,19 @@ return {
         ["<Leader>Ss"] = {
           function()
             local sessionName = vim.fn.input { prompt = "Session Name:" }
+            if sessionName == "" then return end
             require("resession").save(sessionName)
           end,
           desc = "Save session",
         },
         ["<Leader>fH"] = { "<Cmd>Telescope harpoon marks<CR>", desc = "Find Harpoon Marks" },
+        ["<Leader>s"] = { desc = "sneak (leap)" },
       }, sharedKeybinds),
 
       -------------------------------------------------------- insert --------------------------------------------------------
       i = merge({
+        -- cmd-v in insert needs to work a little differently
+        ["<D-v>"] = { function() vim.cmd 'normal! "+p' end, desc = "Paste from clipboard" },
         -- movement in insert mode
         ["<D-Right>"] = { function() vim.cmd "normal! $" end, desc = "Move to end of line" },
         ["<D-Left>"] = { function() vim.cmd "normal! ^" end, desc = "Move to start of line" },

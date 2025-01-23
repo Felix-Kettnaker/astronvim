@@ -1,3 +1,9 @@
+local function gotoMarkIndex()
+  vim.ui.input({ prompt = "Harpoon mark index: " }, function(input)
+    local num = tonumber(input)
+    if num then require("harpoon"):list():select(num) end
+  end)
+end
 return {
   "ThePrimeagen/harpoon",
   branch = "harpoon2",
@@ -20,24 +26,8 @@ return {
           function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end,
           desc = "Toggle harpoon menu",
         }
-        maps.n["<C-x>"] = {
-          function()
-            vim.ui.input({ prompt = "Harpoon mark index: " }, function(input)
-              local num = tonumber(input)
-              if num then require("harpoon"):list():select(num) end
-            end)
-          end,
-          desc = "Goto index of mark",
-        }
-        maps.n[prefix .. "g"] = {
-          function()
-            vim.ui.input({ prompt = "Harpoon mark index: " }, function(input)
-              local num = tonumber(input)
-              if num then require("harpoon"):list():select(num) end
-            end)
-          end,
-          desc = "Goto index <C-x>",
-        }
+        maps.n["<C-S-x>"] = { gotoMarkIndex, desc = "Goto index of mark" }
+        maps.n[prefix .. "g"] = { gotoMarkIndex, desc = "Goto index <C-S-x>" }
         maps.n["<C-p>"] = { function() require("harpoon"):list():prev() end, desc = "Goto previous mark" }
         maps.n[prefix .. "p"] = { function() require("harpoon"):list():prev() end, desc = "Goto prev mark <C-p>" }
         maps.n["<C-n>"] = { function() require("harpoon"):list():next() end, desc = "Goto next mark" }
