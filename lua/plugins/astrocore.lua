@@ -114,7 +114,7 @@ return {
         ["<Leader>bp"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
         ["<Leader>b<tab>"] = { function() vim.cmd "b#" end, desc = "Most recent buffer" },
 
-        ["F2"] = { function() vim.lsp.buf.rename() end, desc = "Rename current symbol" },
+        ["<F2>"] = { function() vim.lsp.buf.rename() end, desc = "Rename current symbol" },
 
         -- mappings for "language"
         ["<Leader>lt"] = {

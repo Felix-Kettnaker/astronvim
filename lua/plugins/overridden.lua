@@ -60,9 +60,12 @@ return {
       local statusline = opts.statusline
 
       -- Add file path component to statusline
-      local file_path = {
+      local file_info = {
         provider = function()
           local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
+          if vim.bo.filetype == "toggleterm" then
+            return "󰆍 " .. "ToggleTerm: " .. string.sub(path, -1) .. " "
+          end
           if path == "" then return "" end
           return "󰉋 " .. path .. " "
         end,
@@ -70,7 +73,7 @@ return {
       }
 
       -- Insert after the "file_info" block
-      table.insert(statusline, 4, file_path)
+      table.insert(statusline, 4, file_info)
       return opts
     end,
   },
