@@ -31,6 +31,8 @@ return {
   { import = "astrocommunity.comment.ts-comments-nvim" },
   { import = "astrocommunity.completion.copilot-lua" },
   { import = "astrocommunity.motion.leap-nvim" },
+  -- { import = "astrocommunity.motion.nvim-spider" },
+  -- { import = "astrocommunity.editing-support.multicursors.nvim" },
   -- { import = "astrocommunity.motion.harpoon" }, -- disabled weil manuel imported
   { import = "astrocommunity.motion.nvim-surround" },
 }

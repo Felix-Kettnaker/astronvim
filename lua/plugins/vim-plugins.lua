@@ -1,3 +1,22 @@
 return {
-  "wellle/targets.vim",
+  {
+    "wellle/targets.vim",
+  },
+  {
+    "azabiong/vim-highlighter",
+    init = function()
+      vim.cmd [[
+        " directory to store highlight files
+        let HiKeywords = '~/.config/nvim/vim-highlighter'
+        hi HiColor30 guifg=#3bcc34 guibg=#232e34 gui=bold
+        hi HiColor31 guifg=#ca3734 guibg=#322235 gui=bold
+        hi HiColor32 guifg=#2cc787 guibg=#273340 gui=bold
+        hi HiColor33 guifg=#d1286f guibg=#392c43 gui=bold
+        hi HiColor34 guifg=#99da6b guibg=#253034 gui=bold
+        hi HiColor35 guifg=#f16556 guibg=#322336 gui=bold
+        hi HiColor36 guifg=#f99b54 guibg=#31242f gui=bold
+        hi HiColor37 guifg=#298cf4 guibg=#1e2d46 gui=bold
+      ]]
+    end,
+  },
 }

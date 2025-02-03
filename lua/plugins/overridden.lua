@@ -3,10 +3,10 @@ return {
     "zbirenbaum/copilot.lua",
     opts = {
       suggestion = {
-        auot_trigger = false,
+        auto_trigger = false,
         keymap = {
           accept = "<C-D-Space>",
-          accept_word = "<D-Right>",
+          accept_word = "<C-D-Return>",
           next = "<C-D-.>",
           prev = "<C-D-,>",
         },
@@ -53,5 +53,25 @@ return {
         },
       },
     },
+  },
+  {
+    "rebelot/heirline.nvim",
+    opts = function(_, opts)
+      local statusline = opts.statusline
+
+      -- Add file path component to statusline
+      local file_path = {
+        provider = function()
+          local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
+          if path == "" then return "" end
+          return "󰉋 " .. path .. " "
+        end,
+        hl = { fg = "#89B4FA" }, -- Catppuccin blue
+      }
+
+      -- Insert after the "file_info" block
+      table.insert(statusline, 4, file_path)
+      return opts
+    end,
   },
 }

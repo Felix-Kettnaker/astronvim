@@ -1,20 +1,21 @@
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `,h astrocore`
 
+-- INFO: merge two tables together for keybinds
 local function merge(t1, t2)
   for k, v in pairs(t2) do
-    t1[k] = v
+    if t1[k] == nil then t1[k] = v end
   end
   return t1
 end
 
+-- INFO: truncating diagnostic messages
 local function formatDiagnostic(diagnostic)
   -- local cursorLine = vim.api.nvim_win_get_cursor(0)[1]
   -- if cursorLine >= diagnostic.lnum - 1 and cursorLine <= diagnostic.end_lnum + 1 then
   -- Diagnostic is in current line
   return diagnostic.message:sub(0, 64) .. (string.len(diagnostic.message) > 64 and "..." or "")
   -- end
-
   -- return diagnostic.message
 end
 
@@ -23,19 +24,10 @@ local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
   ["<S-C-Tab>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
   ["<D-a>"] = { "ggVG", desc = "Select all" },
-  ["<D-f>"] = { "/", desc = "Find in buffer" },
+  ["<D-f>"] = { "/", desc = "Find in buffer" }, -- different in visual mode
   ["<D-F>"] = { function() vim.cmd "Telescope live_grep" end, desc = "Find in files" },
   ["<D-p>"] = { function() vim.cmd "Telescope find_files" end, desc = "Find file" },
-  ["<D-v>"] = {
-    function()
-      if vim.fn.mode() == "i" then
-        vim.api.nvim_input "<C-r>+"
-      else
-        vim.cmd 'normal! "+p'
-      end
-    end,
-    desc = "Paste from clipboard",
-  },
+  ["<D-v>"] = { function() vim.cmd 'normal! "+p' end, desc = "Paste from clipboard" },
   ["<D-s>"] = {
     function()
       vim.api.nvim_input "<Esc>"
@@ -183,7 +175,7 @@ return {
       -------------------------------------------------------- insert --------------------------------------------------------
       i = merge({
         -- cmd-v in insert needs to work a little differently
-        ["<D-v>"] = { function() vim.cmd 'normal! "+p' end, desc = "Paste from clipboard" },
+        ["<D-v>"] = { "<C-r>+", desc = "Paste from clipboard" },
         -- movement in insert mode
         ["<D-Right>"] = { function() vim.cmd "normal! $" end, desc = "Move to end of line" },
         ["<D-Left>"] = { function() vim.cmd "normal! ^" end, desc = "Move to start of line" },
@@ -191,7 +183,7 @@ return {
         ["Ó"] = { function() vim.cmd "normal! b" end, desc = "Move to previous word" }, -- option + shift + h
 
         -- deletion in insert mode
-        ["<D-Backspace>"] = { function() vim.cmd "normal! d^" end, desc = "Delete to start of line" },
+        ["<D-Backspace>"] = { function() vim.cmd "normal! d0" end, desc = "Delete to start of line" },
         ["<D-Delete>"] = { function() vim.cmd "normal! d$" end, desc = "Delete to end of line" },
         ["<S-C-Backspace>"] = { function() vim.cmd "normal! db" end, desc = "Delete word backwards" },
         ["<S-C-Delete>"] = { function() vim.cmd "normal! dw" end, desc = "Delete word forwards" },
@@ -199,6 +191,7 @@ return {
 
       -------------------------------------------------------- visual --------------------------------------------------------
       v = merge({
+        ["<D-f>"] = { "y/\\<C-r>0", desc = "Find Selection in buffer" }, -- funktioniert noch nicht
         -- copy/cut
         ["<D-c>"] = { '"+y', desc = "Copy to clipboard" },
         ["<D-x>"] = { '"+d', desc = "Cut to clipboard" },
