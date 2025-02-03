@@ -45,6 +45,12 @@ local sharedKeybinds = {
     end,
     desc = "Close tab",
   },
+  ["<D-b>"] = {
+    function()
+      vim.cmd("ToggleTerm " .. vim.v.count .. " size=10 direction=horizontal") 
+    end,
+    desc = "Toggle bottom terminal",
+  },
   ["<F5>"] = { function() vim.cmd "AstroReload" end, desc = "Reload Workspace" },
 }
 
@@ -108,7 +114,7 @@ return {
         ["<Leader>bp"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
         ["<Leader>b<tab>"] = { function() vim.cmd "b#" end, desc = "Most recent buffer" },
 
-        ["F2"] = { function() vim.cmd "normal! <Leader>lr" end, desc = "Rename symbol" },
+        ["F2"] = { function() vim.lsp.buf.rename() end, desc = "Rename current symbol" },
 
         -- mappings for "language"
         ["<Leader>lt"] = {
@@ -205,11 +211,11 @@ return {
         ["º"] = { "dpV']", desc = "Move lines down" }, -- option j
       }, sharedKeybinds),
 
-      t = {
+      t = merge({
         ["<C-w>"] = { "<C-\\><C-n><C-w>", desc = "Window (from terminal)" },
         ["<Esc><Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
         ["<D-v>"] = { '<C-\\><C-n>"+pi', desc = "Paste from clipboard" },
-      },
+      }, sharedKeybinds),
     },
   },
 }
