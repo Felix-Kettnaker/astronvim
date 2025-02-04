@@ -140,8 +140,8 @@ return {
         ["ü"] = { "%", desc = "Jump to matching bracket" },
 
         -- move lines
-        ["∆"] = { function() vim.cmd "normal! ddkP" end, desc = "Move line up" }, -- option + k
-        ["º"] = { function() vim.cmd "normal! ddp" end, desc = "Move line down" }, -- option + j
+        ["∆"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" }, -- option + k
+        ["º"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" }, -- option + j
 
         -- toggleterm
         ["<Leader>ti"] = {
@@ -207,8 +207,8 @@ return {
         ["<S-Tab>"] = { "<gv", desc = "Unindent selection" },
 
         -- move lines in visual line mode
-        ["∆"] = { "dkPV']", desc = "Move lines up" }, -- option k
-        ["º"] = { "dpV']", desc = "Move lines down" }, -- option j
+        ["∆"] = { "dkPV']=V']", desc = "Move lines up reindented" }, -- option k
+        ["º"] = { "dpV']=V']", desc = "Move lines down reindented" }, -- option j
       }, sharedKeybinds),
 
       t = merge({
