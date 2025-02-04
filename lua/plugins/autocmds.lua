@@ -17,6 +17,9 @@ return {
               vim.opt_local.relativenumber = false
               vim.opt_local.foldcolumn = "0"
               vim.opt_local.signcolumn = "no"
+
+              -- don't let toggleterm window be taken by buffer
+              -- pcall(function() vim.cmd':PinBuftype' end)
               -- vim.opt_local.buftype = "nofile"
               -- vim.opt_local.filetype = "toggleterm"
             end,

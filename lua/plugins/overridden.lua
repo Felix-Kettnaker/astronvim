@@ -64,7 +64,7 @@ return {
         provider = function()
           local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
           if vim.bo.filetype == "toggleterm" then
-            return "󰆍 " .. "ToggleTerm: " .. string.sub(path, -1) .. " "
+            return "󰆍 " .. "Term " .. string.sub(path, -1) .. " "
           end
           if path == "" then return "" end
           return "󰉋 " .. path .. " "
