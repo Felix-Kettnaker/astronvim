@@ -1,10 +1,16 @@
 # Highlighter Ver 1.63.3
 
 30:\V\<wirdAngezeigt\>
+30:\V\<erwartungEingabeIstValid\>
 31:\V\<wirdNichtAngezeigt\>
+31:\V\<erwartungEingabeIstInvalid\>
 32:\V\<clickJa\>
+32:\V\<autoFill\>
 33:\V\<clickNein\>
+33:\V\<keinAutoFill\>
 34:\V\<istEnabled\>
+34:\V\<checkeEingaben\>
 35:\V\<istDisabled\>
+35:\V\<ignoriereEingaben\>
 36:\V\<vollFoerderung\>
 37:\V\<teilFoerderung\>
