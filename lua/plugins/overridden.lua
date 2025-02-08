@@ -55,6 +55,12 @@ return {
     },
   },
   {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      open_files_do_not_replace_types = { "terminal", "toggleterm" },
+    },
+  },
+  {
     "rebelot/heirline.nvim",
     opts = function(_, opts)
       local statusline = opts.statusline
@@ -62,10 +68,11 @@ return {
       -- Add file path component to statusline
       local file_info = {
         provider = function()
-          local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
-          if vim.bo.filetype == "toggleterm" then
-            return "󰆍 " .. "Term " .. string.sub(path, -1) .. " "
-          end
+          local path_full = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
+          local path = string.sub(path_full, 0, 64)
+          if string.len(path) < string.len(path_full) then path = "..." .. path end
+          if vim.bo.filetype == "toggleterm" then return "󰆍 " .. "Term " .. string.sub(path, -1) .. " " end
+          if vim.bo.filetype == "neo-tree" then return "🌳" end
           if path == "" then return "" end
           return "󰉋 " .. path .. " "
         end,

@@ -19,6 +19,8 @@ local function formatDiagnostic(diagnostic)
   -- return diagnostic.message
 end
 
+vim.cmd "packadd! matchit"
+
 -------------------------------------------------------- all modes --------------------------------------------------------
 local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
@@ -46,9 +48,7 @@ local sharedKeybinds = {
     desc = "Close tab",
   },
   ["<D-b>"] = {
-    function()
-      vim.cmd("ToggleTerm " .. vim.v.count .. " size=10 direction=horizontal") 
-    end,
+    function() vim.cmd("ToggleTerm " .. vim.v.count .. " size=10 direction=horizontal") end,
     desc = "Toggle bottom terminal",
   },
   ["<F5>"] = { function() vim.cmd "AstroReload" end, desc = "Reload Workspace" },
@@ -131,8 +131,8 @@ return {
         ["<Leader>bf"] = { function() vim.cmd "Telescope buffers" end, desc = "Find buffers" },
 
         -- swap jump repeat (, & ;)
-        [";"] = { ",", desc = "Swap ; and ," },
-        [","] = { ";", desc = "Swap , and ;" },
+        [";"] = { ",", desc = "Repeat Jump backward" },
+        [","] = { ";", desc = "Repeat Jump forward" },
 
         -- bring common navigation closer
         ["ö"] = { "^", desc = "Move to first non-blank character" },
@@ -210,6 +210,8 @@ return {
         ["∆"] = { "dkPV']=V']", desc = "Move lines up reindented" }, -- option k
         ["º"] = { "dpV']=V']", desc = "Move lines down reindented" }, -- option j
       }, sharedKeybinds),
+
+      -------------------------------------------------------- terminal -------------------------------------------------------
 
       t = merge({
         ["<C-w>"] = { "<C-\\><C-n><C-w>", desc = "Window (from terminal)" },

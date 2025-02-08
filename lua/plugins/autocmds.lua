@@ -48,6 +48,13 @@ return {
             end,
           },
         },
+        prevent_comment_extension = {
+          {
+            event = { "BufEnter" },
+            desc = "prevents adding the comment prefix when pressing enter or o on a commented line",
+            callback = function() vim.cmd "set formatoptions-=o" end,
+          }
+        }
         --[[
         horizontal_scroll = {
           {

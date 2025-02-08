@@ -6,11 +6,13 @@
 31:\V\<erwartungEingabeIstInvalid\>
 32:\V\<clickJa\>
 32:\V\<autoFill\>
+32:\V\<mitAnsprechpartner\>
 33:\V\<clickNein\>
 33:\V\<keinAutoFill\>
+33:\V\<ohneAnsprechpartner\>
 34:\V\<istEnabled\>
 34:\V\<checkeEingaben\>
 35:\V\<istDisabled\>
-35:\V\<ignoriereEingaben\>
 36:\V\<vollFoerderung\>
 37:\V\<teilFoerderung\>
+35:\V\<checkeEingabenNicht\>
