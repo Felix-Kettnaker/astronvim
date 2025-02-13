@@ -130,6 +130,16 @@ return {
         -- some mapping redundancy
         ["<Leader>bf"] = { function() vim.cmd "Telescope buffers" end, desc = "Find buffers" },
 
+        -- yank from given line(s) and paste at cursor
+        ["<Leader>y"] = {
+          function()
+            vim.ui.input({ prompt = "yank range: " }, function(input)
+              if input == "" then return end
+              vim.cmd(input .. "y | .put")
+            end)
+          end,
+          desc = "Yank from anywhere and paste",
+        },
         -- swap jump repeat (, & ;)
         [";"] = { ",", desc = "Repeat Jump backward" },
         [","] = { ";", desc = "Repeat Jump forward" },
