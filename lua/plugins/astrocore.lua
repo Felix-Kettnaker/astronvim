@@ -25,8 +25,8 @@ vim.cmd "packadd! matchit"
 local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
   ["<S-C-Tab>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
-  ["<D-a>"] = { "ggVG", desc = "Select all" },
-  ["<D-f>"] = { "/", desc = "Find in buffer" }, -- different in visual mode
+  ["<D-a>"] = { function() vim.cmd "normal! ggVG" end, desc = "Select all" },
+  ["<D-f>"] = { function() vim.cmd "normal! /" end, desc = "Find in buffer" }, -- different in visual mode
   ["<D-F>"] = { function() vim.cmd "Telescope live_grep" end, desc = "Find in files" },
   ["<D-p>"] = { function() vim.cmd "Telescope find_files" end, desc = "Find file" },
   ["<D-v>"] = { function() vim.cmd 'normal! "+p' end, desc = "Paste from clipboard" },
