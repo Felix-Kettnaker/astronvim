@@ -127,6 +127,10 @@ return {
         },
         ["<Leader>lp"] = { "=']", desc = "Reindent pasted text" },
 
+        -- quickfixlist
+        ["<Leader>xc"] = {"<cmd>cexpr []<CR>", desc = "Clear quickfix"},
+        ["<Leader>xC"] = {"<cmd>cexpr []<CR>", desc = "Clear loclist"},
+
         -- some mapping redundancy
         ["<Leader>bf"] = { function() vim.cmd "Telescope buffers" end, desc = "Find buffers" },
 
