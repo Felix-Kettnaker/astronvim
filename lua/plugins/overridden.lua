@@ -18,8 +18,8 @@ return {
     opts = {
       keymaps = {
         normal = "<Leader>s",
-        normal_cur = "<Leader>sl",
-        normal_line = "<Leader>sn", -- not really useful
+        normal_cur = "<Leader>sl", -- surround corrent line
+        normal_line = "<Leader>sn", -- surround on new lines (above+bellow)
         normal_cur_line = "<Leader>sln",
         visual = "<Leader>s",
         visual_line = "<Leader>sn",
@@ -39,6 +39,9 @@ return {
           delete = "^( ?/%* ?)().-( ?%*%/ ?)()$",
         },
       },
+      aliases = {
+        ["b"] = { "}", "]", ")", ">"},
+      }
     },
   },
   {

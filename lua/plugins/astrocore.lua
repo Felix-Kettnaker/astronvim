@@ -189,7 +189,14 @@ return {
           desc = "Save session",
         },
         ["<Leader>fH"] = { "<Cmd>Telescope harpoon marks<CR>", desc = "Find Harpoon Marks" },
-        ["<Leader>s"] = { desc = "sneak (leap)" },
+
+        ["<Leader>s"] = { desc = "surround itTf/\\" },
+        ["<Leader>si"] = { desc = "surround with input" },
+        ["<Leader>st"] = { desc = "surround with tag (change leaves attributes)" },
+        ["<Leader>sT"] = { desc = "surround with Tag" },
+        ["<Leader>sf"] = { desc = "surround with function" },
+        ["<Leader>s/"] = { desc = "surround with /*...*/" },
+        ["<Leader>s\\"] = { desc = "surround with /* ... */" },
       }, sharedKeybinds),
 
       -------------------------------------------------------- insert --------------------------------------------------------
