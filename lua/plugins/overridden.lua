@@ -71,7 +71,8 @@ return {
           local path_full = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
           local path = string.sub(path_full, 0, 64)
           if string.len(path) < string.len(path_full) then path = "..." .. path end
-          if vim.bo.filetype == "toggleterm" then return "󰆍 " .. "Term " .. string.sub(path, -1) .. " " end
+          -- need to fix this to actually display the nr in all sessions, for now just longer slice
+          if vim.bo.filetype == "toggleterm" then return "󰆍 " .. "Term " .. string.sub(path, -30) .. " " end
           if vim.bo.filetype == "neo-tree" then return "🌳" end
           if path == "" then return "" end
           return "󰉋 " .. path .. " "

@@ -26,7 +26,7 @@ local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
   ["<S-C-Tab>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
   ["<D-a>"] = { function() vim.cmd "normal! ggVG" end, desc = "Select all" },
-  ["<D-f>"] = { function() vim.cmd "normal! /" end, desc = "Find in buffer" }, -- different in visual mode
+  ["<D-f>"] = { "<Esc>/", desc = "Find in buffer" }, -- different in visual mode
   ["<D-F>"] = { function() vim.cmd "Telescope live_grep" end, desc = "Find in files" },
   ["<D-p>"] = { function() vim.cmd "Telescope find_files" end, desc = "Find file" },
   ["<D-v>"] = { function() vim.cmd 'normal! "+p' end, desc = "Paste from clipboard" },
@@ -137,8 +137,8 @@ return {
         -- yank from given line(s) and paste at cursor
         ["<Leader>y"] = {
           function()
-            vim.ui.input({ prompt = "yank range: " }, function(input)
-              if input == "" then return end
+            vim.ui.input({ prompt = "yank range (comma separated or single value): " }, function(input)
+              if not input or input == "" then return end
               vim.cmd(input .. "y | .put")
             end)
           end,

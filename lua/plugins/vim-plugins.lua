@@ -19,4 +19,5 @@ return {
       ]]
     end,
   },
+  { "habamax/vim-godot" }
 }

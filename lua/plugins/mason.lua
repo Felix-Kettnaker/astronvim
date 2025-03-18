@@ -13,6 +13,9 @@ return {
         "lua_ls",
         -- add more arguments for adding more language servers
       },
+      servers = {
+        gdscript = {}
+      }
     },
   },
   -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
