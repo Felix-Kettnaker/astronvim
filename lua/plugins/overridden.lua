@@ -1,5 +1,5 @@
 return {
-  {
+  { -- copilot.lua
     "zbirenbaum/copilot.lua",
     opts = {
       suggestion = {
@@ -13,7 +13,7 @@ return {
       },
     },
   },
-  {
+  { -- nvim-surround
     "kylechui/nvim-surround",
     opts = {
       keymaps = {
@@ -44,7 +44,7 @@ return {
       }
     },
   },
-  {
+  { -- neo-tree.nvim
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
       window = {
@@ -55,15 +55,17 @@ return {
           ["N"] = "add_directory",
         },
       },
-    },
-  },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    opts = {
+      filesystem = {
+        filtered_items = {
+          hide_by_pattern = {
+            "*.uid",
+          }
+        }
+      },
       open_files_do_not_replace_types = { "terminal", "toggleterm" },
     },
   },
-  {
+  { -- heirline.nvim
     "rebelot/heirline.nvim",
     opts = function(_, opts)
       local statusline = opts.statusline
@@ -87,5 +89,15 @@ return {
       table.insert(statusline, 4, file_info)
       return opts
     end,
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = {
+      defaults = {
+       file_ignore_patterns = {
+          "%.uid",
+        }
+      }
+    }
   },
 }
