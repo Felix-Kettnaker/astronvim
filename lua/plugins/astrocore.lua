@@ -82,6 +82,7 @@ return {
         spell = false,
         signcolumn = "yes",
         wrap = false,
+        gdefault = true,
 
         clipboard = "", -- dd doesnt overwrite + register
         list = true,
@@ -242,7 +243,7 @@ return {
 
       t = merge({
         ["<C-w>"] = { "<C-\\><C-n><C-w>", desc = "Window (from terminal)" },
-        ["<Esc><Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
+        ["<D-Esc>"] = { "<C-\\><C-n>", desc = "Exit terminal mode" },
         ["<D-v>"] = { '<C-\\><C-n>"+pi', desc = "Paste from clipboard" },
       }, sharedKeybinds),
     },
