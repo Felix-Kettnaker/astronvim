@@ -21,6 +21,7 @@ end
 
 vim.cmd "packadd! matchit"
 
+
 -------------------------------------------------------- all modes --------------------------------------------------------
 local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
@@ -179,6 +180,11 @@ return {
 
         -- plugin stuff
         ["<Leader>uo"] = { function() require("copilot.suggestion").toggle_auto_trigger() end, desc = "Toggle Copilot" },
+
+        ["<Leader>um"] = { "<cmd>Neominimap bufToggle<cr>", desc = "Toggle buffer minimap"},
+        ["<Leader>uM"] = { "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap"},
+        ["<C-w>m"] = { "<cmd>Neominimap toggleFocus<cr>", desc = "Switch minimap focus"},
+
         ["<Leader>H"] = { function() vim.cmd "Alpha" end, desc = "Home Screen" },
         ["<Leader>Ss"] = {
           function()

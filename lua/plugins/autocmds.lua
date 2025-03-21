@@ -54,6 +54,23 @@ return {
             desc = "prevents adding the comment prefix when pressing enter or o on a commented line",
             callback = function() vim.cmd "set formatoptions-=o" end,
           }
+        },
+        line_count_minimap_toggle = {
+          {
+            desc = "Refresh the minimap when crossing the relevant line number count",
+            event = {"TextChanged", "TextChangedI", "BufEnter"},
+            callback = function ()
+              local THRESHOLD = 48
+              local old_line_count = vim.g.linecount or 0
+              local new_line_count = vim.api.nvim_buf_line_count(0)
+              if old_line_count > THRESHOLD and new_line_count <= THRESHOLD then
+                vim.cmd "Neominimap bufRefresh"
+              elseif old_line_count <= THRESHOLD and new_line_count > THRESHOLD then
+                vim.cmd "Neominimap bufRefresh"
+              end
+              vim.g.linecount = new_line_count
+            end
+          }
         }
         --[[
         horizontal_scroll = {

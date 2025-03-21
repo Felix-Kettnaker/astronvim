@@ -3,7 +3,7 @@ return {
     "zbirenbaum/copilot.lua",
     opts = {
       suggestion = {
-        -- auto_trigger = false,
+        auto_trigger = false,
         keymap = {
           accept = "<C-D-Space>",
           accept_word = "<C-D-Return>",
@@ -13,6 +13,7 @@ return {
       },
     },
   },
+
   { -- nvim-surround
     "kylechui/nvim-surround",
     opts = {
@@ -44,6 +45,7 @@ return {
       }
     },
   },
+
   { -- neo-tree.nvim
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
@@ -65,6 +67,7 @@ return {
       open_files_do_not_replace_types = { "terminal", "toggleterm" },
     },
   },
+
   { -- heirline.nvim
     "rebelot/heirline.nvim",
     opts = function(_, opts)
@@ -90,7 +93,8 @@ return {
       return opts
     end,
   },
-  {
+
+  { -- telescope.nvim
     "nvim-telescope/telescope.nvim",
     opts = {
       defaults = {
@@ -100,4 +104,33 @@ return {
       }
     }
   },
+
+  {
+    -- "CopilotC-Nvim/CopilotChat.nvim",
+  },
+
+  { -- neominimap.nvim
+    "Isrothy/neominimap.nvim",
+    init = function ()
+      vim.g.neominimap = {
+        x_multiplier = 5,
+        float = {
+          minimap_width = 14,
+          window_border = "none"
+        },
+        buf_filter = function()
+          return vim.api.nvim_buf_line_count(0) > 48
+        end,
+        delay = 800,
+        git = {
+          mode = "icon",
+          icon = {
+            add = "▎",
+            change = "▎",
+            delete = "▎",
+          }
+        }
+      }
+    end
+  }
 }
