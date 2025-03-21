@@ -122,6 +122,11 @@ return {
           return vim.api.nvim_buf_line_count(0) > 48
         end,
         delay = 800,
+        click = { enabled = true },
+
+        diagnostic = {
+          severity = vim.diagnostic.severity.INFO,
+        },
         git = {
           mode = "icon",
           icon = {
@@ -129,6 +134,9 @@ return {
             change = "▎",
             delete = "▎",
           }
+        },
+        search = {
+          enabled = true,
         }
       }
     end
