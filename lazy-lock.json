@@ -79,6 +79,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "ts-comments.nvim": { "branch": "main", "commit": "1bd9d0ba1d8b336c3db50692ffd0955fe1bb9f0c" },
   "tsc.nvim": { "branch": "main", "commit": "5bd25bb5c399b6dc5c00392ade6ac6198534b53a" },
+  "vim-cycle": { "branch": "master", "commit": "57a2a7ca9451f47146a829cc74c1c950a855329e" },
   "vim-godot": { "branch": "master", "commit": "1c8385789f7f4558bdbbf6e75033b34b4727944b" },
   "vim-highlighter": { "branch": "main", "commit": "b12fa20268cf838ac18e295eb408d0112cf0e855" },
   "vim-illuminate": { "branch": "master", "commit": "19cb21f513fc2b02f0c66be70107741e837516a1" },

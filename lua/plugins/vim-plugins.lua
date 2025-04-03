@@ -19,5 +19,6 @@ return {
       ]]
     end,
   },
-  { "habamax/vim-godot" }
+  { "habamax/vim-godot" },
+  { "zef/vim-cycle" }
 }
