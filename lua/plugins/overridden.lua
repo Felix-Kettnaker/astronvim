@@ -39,6 +39,16 @@ return {
           find = " ?/%* ?.- ?%*/ ?",
           delete = "^( ?/%* ?)().-( ?%*%/ ?)()$",
         },
+        ["!"] = {
+          add = { "<!--", "-->" },
+          find = "<!%-%-.-%-%->",
+          delete = "^(<!%-%-)().-(%-%->)()$",
+        },
+        ["¡"] = {
+          add = { " <!-- ", " --> " },
+          find = " ?<!%-%- ?.- ?%-%-> ?",
+          delete = "^( ?<!%-%- ?)().-( ?%-%-> ?)()$",
+        },
       },
       aliases = {
         ["b"] = { "}", "]", ")", ">"},
@@ -111,6 +121,7 @@ return {
 
   { -- neominimap.nvim
     "Isrothy/neominimap.nvim",
+    enabled = false,
     init = function ()
       vim.g.neominimap = {
         x_multiplier = 5,
