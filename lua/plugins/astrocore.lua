@@ -53,6 +53,70 @@ local sharedKeybinds = {
     desc = "Toggle bottom terminal",
   },
   ["<F5>"] = { function() vim.cmd "AstroReload" end, desc = "Reload Workspace" },
+  
+  ["<D-Up>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.lineAddCursor(-1)
+    end
+  end, desc="Add Cursor above"
+  },
+  ["<D-Down>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.lineAddCursor(1)
+    end
+  end, desc="Add Cursor below"
+  },
+  ["<D-S-Up>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.lineSkipCursor(-1)
+    end
+  end, desc="Skip Cursor above"
+  },
+  ["<D-S-Down>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.lineSkipCursor(1)
+    end
+  end, desc="Skip add Cursor below"
+  },
+  ["<C-D-n>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.matchAddCursor(1)
+    end
+  end, desc="Add Cursor next match"
+  },
+  ["<C-D-p>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.matchAddCursor(-1)
+    end
+  end, desc="Add Cursor prev match"
+  },
+  ["<C-D-S-n>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.matchSkipCursor(1)
+    end
+  end, desc="Skip add Cursor prev match"
+  },
+  ["<C-D-S-p>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.matchSkipCursor(-1)
+    end
+  end, desc="Skip add Cursor prev match"
+  },
+  ["<C-D-Tab>"] = { function()
+    local mc = require("multicursor-nvim")
+    for i = 1, vim.v.count1 do
+      mc.nextCursor(1)
+    end
+  end, desc="Cycle Cursor"
+  },
 }
 
 ---@type LazySpec
@@ -204,6 +268,7 @@ return {
         ["<Leader>sf"] = { desc = "surround with function" },
         ["<Leader>s/"] = { desc = "surround with /*...*/" },
         ["<Leader>s\\"] = { desc = "surround with /* ... */" },
+
       }, sharedKeybinds),
 
       -------------------------------------------------------- insert --------------------------------------------------------

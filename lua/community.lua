@@ -33,7 +33,7 @@ return {
   { import = "astrocommunity.motion.leap-nvim" },
   { import = "astrocommunity.quickfix.quicker-nvim"},
   -- { import = "astrocommunity.motion.nvim-spider" },
-  -- { import = "astrocommunity.editing-support.multicursors.nvim" },
+  -- { import = "astrocommunity.editing-support.multicursors-nvim" },
   -- { import = "astrocommunity.motion.harpoon" }, -- disabled weil manuel imported
   { import = "astrocommunity.motion.nvim-surround" },
 }
