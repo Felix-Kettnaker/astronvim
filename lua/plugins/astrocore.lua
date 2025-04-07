@@ -27,7 +27,7 @@ local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
   ["<S-C-Tab>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
   ["<D-a>"] = { function() vim.cmd "normal! ggVG" end, desc = "Select all" },
-  ["<D-f>"] = { "<Esc>/", desc = "Find in buffer" }, -- different in visual mode
+  ["<D-f>"] = { function() vim.cmd "Telescope current_buffer_fuzzy_find" end, desc = "Find in buffer" }, -- different in visual mode
   ["<D-F>"] = { function() vim.cmd "Telescope live_grep" end, desc = "Find in files" },
   ["<D-p>"] = { function() vim.cmd "Telescope find_files" end, desc = "Find file" },
   ["<D-v>"] = { function() vim.cmd 'normal! "+p' end, desc = "Paste from clipboard" },
@@ -290,7 +290,7 @@ return {
 
       -------------------------------------------------------- visual --------------------------------------------------------
       v = merge({
-        ["<D-f>"] = { "y/\\<C-r>0", desc = "Find Selection in buffer" }, -- funktioniert noch nicht
+        ["<D-f>"] = { "y:<C-u>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR><C-r>0", desc = "Find Selection in buffer" },
         -- copy/cut
         ["<D-c>"] = { '"+y', desc = "Copy to clipboard" },
         ["<D-x>"] = { '"+d', desc = "Cut to clipboard" },
