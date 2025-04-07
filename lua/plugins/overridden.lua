@@ -68,8 +68,8 @@ return {
         },
       },
       aliases = {
-        ["b"] = { "}", "]", ")", ">"},
-      }
+        ["b"] = { "}", "]", ")", ">" },
+      },
     },
   },
 
@@ -88,8 +88,8 @@ return {
         filtered_items = {
           hide_by_pattern = {
             "*.uid",
-          }
-        }
+          },
+        },
       },
       open_files_do_not_replace_types = { "terminal", "toggleterm" },
     },
@@ -107,7 +107,11 @@ return {
           local path = string.sub(path_full, 0, 64)
           if string.len(path) < string.len(path_full) then path = "..." .. path end
           -- need to fix this to actually display the nr in all sessions, for now just longer slice
-          if vim.bo.filetype == "toggleterm" then return "󰆍 " .. "Term " .. string.sub(path, -30) .. " " end
+          if vim.bo.filetype == "toggleterm" then
+            local bufname = vim.api.nvim_buf_get_name(0)
+            local term_num = bufname:match("#toggleterm#(%d+)")
+            return "󰆍 Term " .. (term_num or "?") .. " "
+          end
           if vim.bo.filetype == "neo-tree" then return "🌳" end
           if path == "" then return "" end
           return "󰉋 " .. path .. " "
@@ -125,11 +129,11 @@ return {
     "nvim-telescope/telescope.nvim",
     opts = {
       defaults = {
-       file_ignore_patterns = {
+        file_ignore_patterns = {
           "%.uid",
-        }
-      }
-    }
+        },
+      },
+    },
   },
 
   {
@@ -139,16 +143,14 @@ return {
   { -- neominimap.nvim
     "Isrothy/neominimap.nvim",
     enabled = false,
-    init = function ()
+    init = function()
       vim.g.neominimap = {
         x_multiplier = 5,
         float = {
           minimap_width = 14,
-          window_border = "none"
+          window_border = "none",
         },
-        buf_filter = function()
-          return vim.api.nvim_buf_line_count(0) > 48
-        end,
+        buf_filter = function() return vim.api.nvim_buf_line_count(0) > 48 end,
         delay = 800,
         click = { enabled = true },
 
@@ -161,19 +163,19 @@ return {
             add = "▎",
             change = "▎",
             delete = "▎",
-          }
+          },
         },
         search = {
           enabled = true,
-        }
+        },
       }
-    end
+    end,
   },
   {
     "jake-stewart/multicursor.nvim",
-    branch="1.0",
+    branch = "1.0",
     config = function()
-      local mc = require("multicursor-nvim")
+      local mc = require "multicursor-nvim"
       mc.setup()
 
       local set = vim.keymap.set
@@ -189,7 +191,6 @@ return {
       -- Mappings defined in a keymap layer only apply when there are
       -- multiple cursors. This lets you have overlapping mappings.
       mc.addKeymapLayer(function(layerSet)
-
         -- Delete the main cursor.
         -- layerSet({"n", "x"}, "<leader>x", mc.deleteCursor)
 
@@ -206,6 +207,6 @@ return {
       -- Customize how cursors look.
       local hl = vim.api.nvim_set_hl
       hl(0, "MultiCursorCursor", { bg = "#FFFFAA", fg = "#332222" })
-    end
+    end,
   },
 }
