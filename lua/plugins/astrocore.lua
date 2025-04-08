@@ -311,6 +311,10 @@ return {
         ["∆"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" }, -- option + k
         ["º"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" }, -- option + j
 
+        -- indent lines
+        ["<Tab>"] = { ">>", desc = "Indent line" },
+        ["<S-Tab>"] = { "<<", desc = "dedentline" },
+
         -- toggleterm
         ["<Leader>ti"] = {
           function()
@@ -368,6 +372,8 @@ return {
         ["<D-Left>"] = { function() vim.cmd "normal! ^" end, desc = "Move to start of line" },
         ["ﬂ"] = { function() vim.cmd "normal! w" end, desc = "Move to next word" }, -- option + shift + l
         ["Ó"] = { function() vim.cmd "normal! b" end, desc = "Move to previous word" }, -- option + shift + h
+
+        ["<S-Tab>"] = { function() vim.cmd "normal! <<" end, desc = "dedentline" },
 
         -- deletion in insert mode
         ["<D-Backspace>"] = { function() vim.cmd "normal! d0" end, desc = "Delete to start of line" },
