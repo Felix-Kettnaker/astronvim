@@ -19,6 +19,94 @@ local function formatDiagnostic(diagnostic)
   -- return diagnostic.message
 end
 
+function SplitHtmlTag()
+  -- Get the current line and cursor position
+  local bufnr = vim.api.nvim_get_current_buf()
+  local line = vim.api.nvim_get_current_line()
+  local cursor_pos = vim.api.nvim_win_get_cursor(0)
+  local row = cursor_pos[1] - 1 -- Convert to 0-based index
+
+  -- Determine the indentation level (number of leading spaces)
+  local indent = line:match("^(%s*)")
+  local indent_level = #indent
+  local attr_indent = indent_level + 2
+
+  -- Pattern to match tag name and attributes
+  local tag_pattern = "^%s*<([%w-]+)(.-)(/?)>$"
+
+  -- Extract tag name, attributes, and self-closing slash (if any)
+  local tag_name, attributes, self_closing = line:match(tag_pattern)
+  if not tag_name then
+    print("No valid HTML tag found on the current line.")
+    return
+  end
+
+  -- Trim leading and trailing whitespace from attributes
+  attributes = attributes:gsub("^%s*(.-)%s*$", "%1")
+-- Parse attributes safely (handles key="value", key='value', and key-only like @click, no-caps)
+local attr_list = {}
+local pos = 1
+while pos <= #attributes do
+  -- Skip whitespace
+  local _, next_pos = attributes:find("^%s*", pos)
+  pos = next_pos + 1
+
+  -- Try key="value"
+  local key, val, end_pos = attributes:match('^([@:%w%.-]+)%s*=%s*"([^"]*)"', pos)
+  if key then
+    table.insert(attr_list, key .. '="' .. val .. '"')
+    pos = pos + #key + #val + 3 + (attributes:sub(pos + #key + 1):match("^%s*") or ""):len()
+  else
+    -- Try key='value'
+    key, val = attributes:match("^([@:%w%.-]+)%s*=%s*'([^']*)'", pos)
+    if key then
+      table.insert(attr_list, key .. '="' .. val .. '"') -- normalize to double quotes
+      pos = pos + #key + #val + 3 + (attributes:sub(pos + #key + 1):match("^%s*") or ""):len()
+    else
+      -- Try key-only boolean attribute
+      local raw_attr = attributes:match("^([@:%w%.-]+)", pos)
+      if raw_attr then
+        table.insert(attr_list, raw_attr)
+        pos = pos + #raw_attr
+      else
+        -- Can't match anything, break to avoid infinite loop
+        break
+      end
+    end
+  end
+end
+  -- local attr_list = {}
+  -- for attr in attributes:gmatch('%S+') do
+  --   local key, val = attr:match('([^=]+)%s*=%s*"([^"]*)"')
+  --   if not key then
+  --     key, val = attr:match("([^=]+)%s*=%s*'([^']*)'")
+  --   end
+  --
+  --   if key and val then
+  --     table.insert(attr_list, key .. '="' .. val .. '"')
+  --   else
+  --     table.insert(attr_list, attr) -- key-only attribute
+  --   end
+  -- end
+
+  -- Construct the new formatted tag as a table of lines
+  local formatted_tag = { indent .. "<" .. tag_name }
+  for _, attr in ipairs(attr_list) do
+    table.insert(formatted_tag, string.rep(" ", attr_indent) .. attr)
+  end
+  if self_closing == "/" then
+    table.insert(formatted_tag, indent .. "/>")
+  else
+    table.insert(formatted_tag, indent .. ">")
+  end
+
+  -- Replace the current line with the formatted tag
+  vim.api.nvim_buf_set_lines(bufnr, row, row + 1, false, formatted_tag)
+end
+
+-- Create a command ':SplitHtmlTag' to call the function
+vim.api.nvim_create_user_command('SplitHtmlTag', SplitHtmlTag, {})
+
 vim.cmd "packadd! matchit"
 
 

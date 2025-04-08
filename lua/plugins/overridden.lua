@@ -106,7 +106,6 @@ return {
           local path_full = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
           local path = string.sub(path_full, 0, 64)
           if string.len(path) < string.len(path_full) then path = "..." .. path end
-          -- need to fix this to actually display the nr in all sessions, for now just longer slice
           if vim.bo.filetype == "toggleterm" then
             local bufname = vim.api.nvim_buf_get_name(0)
             local term_num = bufname:match("#toggleterm#(%d+)")
