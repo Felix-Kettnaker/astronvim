@@ -19,6 +19,7 @@ local function formatDiagnostic(diagnostic)
   -- return diagnostic.message
 end
 
+
 function SplitHtmlTag()
   -- Get the current line and cursor position
   local bufnr = vim.api.nvim_get_current_buf()
@@ -27,67 +28,54 @@ function SplitHtmlTag()
   local row = cursor_pos[1] - 1 -- Convert to 0-based index
 
   -- Determine the indentation level (number of leading spaces)
-  local indent = line:match("^(%s*)")
+  local indent = line:match "^(%s*)"
   local indent_level = #indent
   local attr_indent = indent_level + 2
 
   -- Pattern to match tag name and attributes
-  local tag_pattern = "^%s*<([%w-]+)(.-)(/?)>$"
+  local tag_pattern = "^%s*<([%w-]+)(.-)(/?)>(.*)$"
 
   -- Extract tag name, attributes, and self-closing slash (if any)
-  local tag_name, attributes, self_closing = line:match(tag_pattern)
+  local tag_name, attributes, self_closing, closing_tag = line:match(tag_pattern)
   if not tag_name then
-    print("No valid HTML tag found on the current line.")
+    print "No valid HTML tag found on the current line."
     return
   end
 
   -- Trim leading and trailing whitespace from attributes
   attributes = attributes:gsub("^%s*(.-)%s*$", "%1")
--- Parse attributes safely (handles key="value", key='value', and key-only like @click, no-caps)
-local attr_list = {}
-local pos = 1
-while pos <= #attributes do
-  -- Skip whitespace
-  local _, next_pos = attributes:find("^%s*", pos)
-  pos = next_pos + 1
+  -- Parse attributes safely (handles key="value", key='value', and key-only like @click, no-caps)
+  local attr_list = {}
+  local pos = 1
+  while pos <= #attributes do
+    -- Skip whitespace
+    local _, next_pos = attributes:find("^%s*", pos)
+    pos = next_pos + 1
 
-  -- Try key="value"
-  local key, val, end_pos = attributes:match('^([@:%w%.-]+)%s*=%s*"([^"]*)"', pos)
-  if key then
-    table.insert(attr_list, key .. '="' .. val .. '"')
-    pos = pos + #key + #val + 3 + (attributes:sub(pos + #key + 1):match("^%s*") or ""):len()
-  else
-    -- Try key='value'
-    key, val = attributes:match("^([@:%w%.-]+)%s*=%s*'([^']*)'", pos)
+    -- Try key="value"
+    local key, val, end_pos = attributes:match('^([@:%w%.-]+)%s*=%s*"([^"]*)"', pos)
     if key then
-      table.insert(attr_list, key .. '="' .. val .. '"') -- normalize to double quotes
-      pos = pos + #key + #val + 3 + (attributes:sub(pos + #key + 1):match("^%s*") or ""):len()
+      table.insert(attr_list, key .. '="' .. val .. '"')
+      pos = pos + #key + #val + 3 + (attributes:sub(pos + #key + 1):match "^%s*" or ""):len()
     else
-      -- Try key-only boolean attribute
-      local raw_attr = attributes:match("^([@:%w%.-]+)", pos)
-      if raw_attr then
-        table.insert(attr_list, raw_attr)
-        pos = pos + #raw_attr
+      -- Try key='value'
+      key, val = attributes:match("^([@:%w%.-]+)%s*=%s*'([^']*)'", pos)
+      if key then
+        table.insert(attr_list, key .. '="' .. val .. '"') -- normalize to double quotes
+        pos = pos + #key + #val + 3 + (attributes:sub(pos + #key + 1):match "^%s*" or ""):len()
       else
-        -- Can't match anything, break to avoid infinite loop
-        break
+        -- Try key-only boolean attribute
+        local raw_attr = attributes:match("^([@:%w%.-]+)", pos)
+        if raw_attr then
+          table.insert(attr_list, raw_attr)
+          pos = pos + #raw_attr
+        else
+          -- Can't match anything, break to avoid infinite loop
+          break
+        end
       end
     end
   end
-end
-  -- local attr_list = {}
-  -- for attr in attributes:gmatch('%S+') do
-  --   local key, val = attr:match('([^=]+)%s*=%s*"([^"]*)"')
-  --   if not key then
-  --     key, val = attr:match("([^=]+)%s*=%s*'([^']*)'")
-  --   end
-  --
-  --   if key and val then
-  --     table.insert(attr_list, key .. '="' .. val .. '"')
-  --   else
-  --     table.insert(attr_list, attr) -- key-only attribute
-  --   end
-  -- end
 
   -- Construct the new formatted tag as a table of lines
   local formatted_tag = { indent .. "<" .. tag_name }
@@ -97,18 +85,17 @@ end
   if self_closing == "/" then
     table.insert(formatted_tag, indent .. "/>")
   else
-    table.insert(formatted_tag, indent .. ">")
+    table.insert(formatted_tag, indent .. ">" .. closing_tag)
   end
 
   -- Replace the current line with the formatted tag
   vim.api.nvim_buf_set_lines(bufnr, row, row + 1, false, formatted_tag)
 end
-
 -- Create a command ':SplitHtmlTag' to call the function
-vim.api.nvim_create_user_command('SplitHtmlTag', SplitHtmlTag, {})
+vim.api.nvim_create_user_command("SplitHtmlTag", SplitHtmlTag, {})
+
 
 vim.cmd "packadd! matchit"
-
 
 -------------------------------------------------------- all modes --------------------------------------------------------
 local sharedKeybinds = {
@@ -141,69 +128,70 @@ local sharedKeybinds = {
     desc = "Toggle bottom terminal",
   },
   ["<F5>"] = { function() vim.cmd "AstroReload" end, desc = "Reload Workspace" },
-  
-  ["<D-Up>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.lineAddCursor(-1)
-    end
-  end, desc="Add Cursor above"
+
+  -- Multicursor
+  ["<D-k>"] = {
+    function()
+      local mc = require "multicursor-nvim"
+      for i = 1, vim.v.count1 do
+        mc.lineAddCursor(-1)
+      end
+    end,
+    desc = "Add Cursor above",
   },
-  ["<D-Down>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.lineAddCursor(1)
-    end
-  end, desc="Add Cursor below"
+  ["<D-j>"] = {
+    function()
+      local mc = require "multicursor-nvim"
+      for i = 1, vim.v.count1 do
+        mc.lineAddCursor(1)
+      end
+    end,
+    desc = "Add Cursor below",
   },
-  ["<D-S-Up>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.lineSkipCursor(-1)
-    end
-  end, desc="Skip Cursor above"
+  ["<D-S-k>"] = {
+    function()
+      local mc = require "multicursor-nvim"
+      for i = 1, vim.v.count1 do
+        mc.lineSkipCursor(-1)
+      end
+    end,
+    desc = "Skip Cursor above",
   },
-  ["<D-S-Down>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.lineSkipCursor(1)
-    end
-  end, desc="Skip add Cursor below"
+  ["<D-S-j>"] = {
+    function()
+      local mc = require "multicursor-nvim"
+      for i = 1, vim.v.count1 do
+        mc.lineSkipCursor(1)
+      end
+    end,
+    desc = "Skip add Cursor below",
   },
-  ["<C-D-n>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.matchAddCursor(1)
-    end
-  end, desc="Add Cursor next match"
+  ["<D-n>"] = {
+    function()
+      local mc = require "multicursor-nvim"
+      for i = 1, vim.v.count1 do
+        mc.matchAddCursor(1)
+      end
+    end,
+    desc = "Add Cursor next match",
   },
-  ["<C-D-p>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.matchAddCursor(-1)
-    end
-  end, desc="Add Cursor prev match"
+  ["<D-N>"] = {
+    function()
+      local mc = require "multicursor-nvim"
+      for i = 1, vim.v.count1 do
+        mc.matchAddCursor(-1)
+      end
+    end,
+    desc = "Add Cursor prev match",
   },
-  ["<C-D-S-n>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.matchSkipCursor(1)
-    end
-  end, desc="Skip add Cursor prev match"
-  },
-  ["<C-D-S-p>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.matchSkipCursor(-1)
-    end
-  end, desc="Skip add Cursor prev match"
-  },
-  ["<C-D-Tab>"] = { function()
-    local mc = require("multicursor-nvim")
-    for i = 1, vim.v.count1 do
-      mc.nextCursor(1)
-    end
-  end, desc="Cycle Cursor"
+  ["<D-l>"] = {
+    function()
+      local mc = require "multicursor-nvim"
+      for i = 1, vim.v.count1 do
+        mc.nextCursor(1)
+      end
+    end,
+    desc = "Cycle Cursor",
   },
 }
 
@@ -282,8 +270,8 @@ return {
         ["<Leader>lp"] = { "=']", desc = "Reindent pasted text" },
 
         -- quickfixlist
-        ["<Leader>xc"] = {"<cmd>cexpr []<CR>", desc = "Clear quickfix"},
-        ["<Leader>xC"] = {"<cmd>cexpr []<CR>", desc = "Clear loclist"},
+        ["<Leader>xc"] = { "<cmd>cexpr []<CR>", desc = "Clear quickfix" },
+        ["<Leader>xC"] = { "<cmd>cexpr []<CR>", desc = "Clear loclist" },
 
         -- some mapping redundancy
         ["<Leader>bf"] = { function() vim.cmd "Telescope buffers" end, desc = "Find buffers" },
@@ -315,6 +303,10 @@ return {
         ["<Tab>"] = { ">>", desc = "Indent line" },
         ["<S-Tab>"] = { "<<", desc = "dedentline" },
 
+        -- custom functions
+        -- opt shft a
+        ["Å"] = { function() vim.cmd "SplitHtmlTag" end, desc = "Break HTML Tag into multiple lines" },
+
         -- toggleterm
         ["<Leader>ti"] = {
           function()
@@ -338,9 +330,9 @@ return {
         -- plugin stuff
         ["<Leader>uo"] = { function() require("copilot.suggestion").toggle_auto_trigger() end, desc = "Toggle Copilot" },
 
-        ["<Leader>um"] = { "<cmd>Neominimap bufToggle<cr>", desc = "Toggle buffer minimap"},
-        ["<Leader>uM"] = { "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap"},
-        ["<C-w>m"] = { "<cmd>Neominimap toggleFocus<cr>", desc = "Switch minimap focus"},
+        ["<Leader>um"] = { "<cmd>Neominimap bufToggle<cr>", desc = "Toggle buffer minimap" },
+        ["<Leader>uM"] = { "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
+        ["<C-w>m"] = { "<cmd>Neominimap toggleFocus<cr>", desc = "Switch minimap focus" },
 
         ["<Leader>H"] = { function() vim.cmd "Alpha" end, desc = "Home Screen" },
         ["<Leader>Ss"] = {
@@ -360,7 +352,6 @@ return {
         ["<Leader>sf"] = { desc = "surround with function" },
         ["<Leader>s/"] = { desc = "surround with /*...*/" },
         ["<Leader>s\\"] = { desc = "surround with /* ... */" },
-
       }, sharedKeybinds),
 
       -------------------------------------------------------- insert --------------------------------------------------------
@@ -384,7 +375,10 @@ return {
 
       -------------------------------------------------------- visual --------------------------------------------------------
       v = merge({
-        ["<D-f>"] = { "y:<C-u>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR><C-r>0", desc = "Find Selection in buffer" },
+        ["<D-f>"] = {
+          "y:<C-u>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR><C-r>0",
+          desc = "Find Selection in buffer",
+        },
         -- copy/cut
         ["<D-c>"] = { '"+y', desc = "Copy to clipboard" },
         ["<D-x>"] = { '"+d', desc = "Cut to clipboard" },
