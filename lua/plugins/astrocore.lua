@@ -367,15 +367,6 @@ return {
           end,
           desc = " Skip prev match",
         },
-        ["<Leader>mm"] = {
-          function()
-            local mc = require "multicursor-nvim"
-            for i = 1, vim.v.count1 do
-              mc.addCursorOperator()
-            end
-          end,
-          desc = " Add with Textobject",
-        },
         -- add all matches
         ["<Leader>m*"] = {
           function() require("multicursor-nvim").matchAllAddCursors() end,
@@ -408,6 +399,45 @@ return {
             end
           end,
           desc = "󱞹 Cycle backward",
+        },
+        -- freeze
+        ["<Leader>m<Leader>"] = {
+          function()
+            local mc = require "multicursor-nvim"
+            for i = 1, vim.v.count1 do
+              mc.toggleCursor()
+            end
+          end,
+          desc = " Freeze Cursors",
+        },
+        -- add everywhere inside Text object
+        ["<Leader>mt"] = {
+          function()
+            local mc = require "multicursor-nvim"
+            for i = 1, vim.v.count1 do
+              mc.addCursorOperator()
+            end
+          end,
+          desc = " Add inside Textobject",
+        },
+        -- take motion to mark word, motion to mark range, add every match
+        ["<Leader>mo"] = {
+          function()
+            local mc = require "multicursor-nvim"
+            for i = 1, vim.v.count1 do
+              mc.operator()
+            end
+          end,
+          desc = " ",
+        },
+        ["<Leader>m/"] = {
+          function()
+            local mc = require "multicursor-nvim"
+            for i = 1, vim.v.count1 do
+              mc.searchAllAddCursors()
+            end
+          end,
+          desc = " add at every serch result",
         },
 
         -- plugin stuff
@@ -502,6 +532,10 @@ return {
         ["A"] = {
           function() require("multicursor-nvim").appendVisual() end,
           desc = "Append at selection end",
+        },
+        ["<Leader>ms"] = {
+          function() require("multicursor-nvim").splitCursors() end,
+          desc = "Add Cursors at regex splits",
         },
       }, sharedKeybinds),
 
