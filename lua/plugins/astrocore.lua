@@ -234,6 +234,7 @@ return {
 
         -- indent lines
         ["<Tab>"] = { ">>", desc = "Indent line" },
+        ["<C-i>"] = { "<C-i>", desc = "Jump to next location" }, -- Tab is identical to <C-i> by default
         ["<S-Tab>"] = { "<<", desc = "dedentline" },
 
         -- custom functions
