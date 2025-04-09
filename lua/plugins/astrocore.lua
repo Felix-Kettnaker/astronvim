@@ -237,6 +237,8 @@ return {
         ["<C-i>"] = { "<C-i>", desc = "Jump to next location" }, -- Tab is identical to <C-i> by default
         ["<S-Tab>"] = { "<<", desc = "dedentline" },
 
+        ["gV"] = { "v$h", desc = "Visual nutil EOL" },
+
         -- custom functions
         -- opt shft a
         ["Å"] = { function() vim.cmd "SplitHtmlTag" end, desc = "Break HTML Tag into multiple lines" },
