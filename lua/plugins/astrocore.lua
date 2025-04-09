@@ -253,16 +253,6 @@ return {
           desc = "Init double term layout",
         },
 
-        -- git with toggletermr
-        ["<Leader>ge"] = { desc = "Execute a predefined git command" },
-        ["<Leader>gec"] = {
-          function() vim.cmd "TermExec cmd='git commit -a' go_back=0" end,
-          desc = " Commit with message",
-        },
-        ["<Leader>gel"] = { function() vim.cmd "TermExec cmd='git pull --rebase'" end, desc = "󰇚 Pull with rebase" },
-        ["<Leader>geL"] = { function() vim.cmd "TermExec cmd='git pull'" end, desc = "󰇚 Pull" },
-        ["<Leader>ges"] = { function() vim.cmd "TermExec cmd='git push'" end, desc = "󰕒 Push" },
-
         -- Multicursor
         ["<Leader>m"] = { desc = " Multicursor" },
         -- add
