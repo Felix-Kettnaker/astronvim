@@ -150,6 +150,7 @@ return {
     options = {
       opt = { -- vim.opt.<key>
         relativenumber = true,
+        scrolloff = 12,
         number = true,
         spell = false,
         signcolumn = "yes",
