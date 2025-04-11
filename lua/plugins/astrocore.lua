@@ -254,6 +254,22 @@ return {
           desc = "Init double term layout",
         },
 
+        -- AI
+        ["<Leader>a"] = { desc = " AI features" },
+        ["<Leader>ac"] = { function() vim.cmd "CodeCompanionChat Toggle" end, desc = "Open Chat window" },
+        ["<D-r>"] = { function() vim.cmd "CodeCompanionChat Toggle" end, desc = "Open Ai Chat window" },
+        ["<Leader>ai"] = {
+          function()
+            vim.ui.input({ prompt = "Enter prompt:" }, function(prompt)
+              if not prompt or prompt == "" then return end
+              vim.cmd("CodeCompanion " .. prompt)
+            end)
+          end,
+          desc = "ask inline",
+        },
+        ["<Leader>fA"] = { function() vim.cmd "CodeCompanionActions" end, desc = "Find AI actions" },
+        ["<Leader>af"] = { function() vim.cmd "CodeCompanionActions" end, desc = "Find AI actions" },
+
         -- Multicursor
         ["<Leader>m"] = { desc = " Multicursor" },
         -- add
@@ -504,6 +520,23 @@ return {
         -- move lines in visual line mode
         ["∆"] = { "dkPV']=V']", desc = "Move lines up reindented" }, -- option k
         ["º"] = { "dpV']=V']", desc = "Move lines down reindented" }, -- option j
+
+        -- AI
+        ["<Leader>a"] = { desc = " AI features" },
+        ["<Leader>ac"] = { function() vim.cmd "CodeCompanionChat Toggle" end, desc = "Open Chat window" },
+        ["<D-r>"] = { function() vim.cmd "CodeCompanionChat Toggle" end, desc = "Open Ai Chat window" },
+        ["<Leader>ai"] = {
+          function()
+            vim.ui.input({ prompt = "Enter prompt:" }, function(prompt)
+              if not prompt or prompt == "" then return end
+              vim.cmd("CodeCompanion " .. prompt)
+            end)
+          end,
+          desc = "ask inline",
+        },
+        ["<Leader>fA"] = { function() vim.cmd "CodeCompanionActions" end, desc = "Find AI actions" },
+        ["<Leader>af"] = { function() vim.cmd "CodeCompanionActions" end, desc = "Find AI actions" },
+        ["<Leader>aa"] = { function() vim.cmd "CodeCompanionChat Add" end, desc = "Append selection to AI chat" },
 
         -- Multicursor
         ["<Leader>m"] = { desc = " Multicursor" },

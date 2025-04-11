@@ -28,6 +28,41 @@ return {
           })
         end,
       },
+      display = {
+        action_palette = {
+          provider = "default",
+          opts = {
+            show_default_actions = true,
+            show_default_prompt_library = true,
+          },
+        },
+      },
+      strategies = {
+        chat = {
+          keymaps = {
+            send = {
+              modes = {
+                i = "<D-CR>"
+              },
+            },
+            -- completion_menu = {
+            --   modes = {
+            --     i = "<D-Space>"
+            --   },
+            -- },
+          },
+        },
+      },
+    },
+  },
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    opts = {
+      preview = {
+        filetypes = { "markdown", "codecompanion" },
+        ignore_buftypes = {},
+      },
     },
   },
 
