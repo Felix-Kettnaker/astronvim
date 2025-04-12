@@ -230,8 +230,10 @@ return {
         ["ü"] = { "%", desc = "Jump to matching bracket" },
 
         -- move lines
-        ["∆"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" }, -- option + k
-        ["º"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" }, -- option + j
+        ["<M-Up>"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" }, -- option + k
+        ["<M-k>"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" }, -- option + k
+        ["<M-Down>"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" }, -- option + j
+        ["<M-j>"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" }, -- option + j
 
         -- indent lines
         ["<Tab>"] = { ">>", desc = "Indent line" },
@@ -460,9 +462,9 @@ return {
         -- plugin stuff
         ["<Leader>uo"] = { function() require("copilot.suggestion").toggle_auto_trigger() end, desc = "Toggle Copilot" },
 
-        ["<Leader>um"] = { "<cmd>Neominimap bufToggle<cr>", desc = "Toggle buffer minimap" },
-        ["<Leader>uM"] = { "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
-        ["<C-w>m"] = { "<cmd>Neominimap toggleFocus<cr>", desc = "Switch minimap focus" },
+        -- ["<Leader>um"] = { "<cmd>Neominimap bufToggle<cr>", desc = "Toggle buffer minimap" },
+        -- ["<Leader>uM"] = { "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
+        -- ["<C-w>m"] = { "<cmd>Neominimap toggleFocus<cr>", desc = "Switch minimap focus" },
 
         ["<Leader>H"] = { function() vim.cmd "Alpha" end, desc = "Home Screen" },
         ["<Leader>Ss"] = {
@@ -476,12 +478,12 @@ return {
         ["<Leader>fH"] = { "<Cmd>Telescope harpoon marks<CR>", desc = "Find Harpoon Marks" },
 
         ["<Leader>s"] = { desc = "surround itTf/\\" },
-        ["<Leader>si"] = { desc = "surround with input" },
-        ["<Leader>st"] = { desc = "surround with tag (change leaves attributes)" },
-        ["<Leader>sT"] = { desc = "surround with Tag" },
-        ["<Leader>sf"] = { desc = "surround with function" },
-        ["<Leader>s/"] = { desc = "surround with /*...*/" },
-        ["<Leader>s\\"] = { desc = "surround with /* ... */" },
+        -- ["<Leader>si"] = { desc = "surround with input" },
+        -- ["<Leader>st"] = { desc = "surround with tag (change leaves attributes)" },
+        -- ["<Leader>sT"] = { desc = "surround with Tag" },
+        -- ["<Leader>sf"] = { desc = "surround with function" },
+        -- ["<Leader>s/"] = { desc = "surround with /*...*/" },
+        -- ["<Leader>s\\"] = { desc = "surround with /* ... */" },
       }, sharedKeybinds),
 
       -------------------------------------------------------- insert --------------------------------------------------------
@@ -489,18 +491,18 @@ return {
         -- cmd-v in insert needs to work a little differently
         ["<D-v>"] = { "<C-r>+", desc = "Paste from clipboard" },
         -- movement in insert mode
-        ["<D-Right>"] = { function() vim.cmd "normal! $" end, desc = "Move to end of line" },
-        ["<D-Left>"] = { function() vim.cmd "normal! ^" end, desc = "Move to start of line" },
-        ["ﬂ"] = { function() vim.cmd "normal! w" end, desc = "Move to next word" }, -- option + shift + l
-        ["Ó"] = { function() vim.cmd "normal! b" end, desc = "Move to previous word" }, -- option + shift + h
+        ["<D-Right>"] = { "<Cmd>norm! $<CR>", desc = "Move to end of line" },
+        ["<D-Left>"] = { ">Cmd>norm! ^<CR>", desc = "Move to start of line" },
+        ["<M-Right>"] = { "<Cmd>norm! w<CR>", desc = "Move to next word" },
+        ["<M-Left>"] = { "<Cmd>norm! b<CR>", desc = "Move to previous word" },
 
-        ["<S-Tab>"] = { function() vim.cmd "normal! <<" end, desc = "dedentline" },
+        ["<S-Tab>"] = { "<Cmd>norm! <<<CR>", desc = "dedentline" },
 
         -- deletion in insert mode
-        ["<D-Backspace>"] = { function() vim.cmd "normal! d0" end, desc = "Delete to start of line" },
-        ["<D-Delete>"] = { function() vim.cmd "normal! d$" end, desc = "Delete to end of line" },
-        ["<S-C-Backspace>"] = { function() vim.cmd "normal! db" end, desc = "Delete word backwards" },
-        ["<S-C-Delete>"] = { function() vim.cmd "normal! dw" end, desc = "Delete word forwards" },
+        ["<D-Backspace>"] = { "<Cmd>norm! d0<CR>", desc = "Delete to start of line" },
+        ["<D-Delete>"] = { "<Cmd>norm! ld$<CR>", desc = "Delete to end of line" },
+        ["<M-Backspace>"] = { "<Cmd>norm! db<CR>", desc = "Delete word backwards" },
+        ["<M-Delete>"] = { "<Cmd>norm! dw<CR>", desc = "Delete word forwards" },
       }, sharedKeybinds),
 
       -------------------------------------------------------- visual --------------------------------------------------------
@@ -509,6 +511,7 @@ return {
           "y:<C-u>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR><C-r>0",
           desc = "Find Selection in buffer",
         },
+        ["/"] = { "y/<C-r>0", desc = "Search selection in buffer" },
         -- copy/cut
         ["<D-c>"] = { '"+y', desc = "Copy to clipboard" },
         ["<D-x>"] = { '"+d', desc = "Cut to clipboard" },
@@ -518,8 +521,8 @@ return {
         ["<S-Tab>"] = { "<gv", desc = "Unindent selection" },
 
         -- move lines in visual line mode
-        ["∆"] = { "dkPV']=V']", desc = "Move lines up reindented" }, -- option k
-        ["º"] = { "dpV']=V']", desc = "Move lines down reindented" }, -- option j
+        ["<M-k>"] = { "dkPV']=V']", desc = "Move lines up reindented" },
+        ["<M-j>"] = { "dpV']=V']", desc = "Move lines down reindented" },
 
         -- AI
         ["<Leader>a"] = { desc = " AI features" },
