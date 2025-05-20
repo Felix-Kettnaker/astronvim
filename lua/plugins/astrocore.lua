@@ -303,7 +303,7 @@ return {
         ["<Leader>af"] = { function() vim.cmd "CodeCompanionActions" end, desc = "Find AI actions" },
 
         -- Multicursor
-        ["<Leader>m"] = { desc = " Multicursor" },
+        ["<Leader>M"] = { desc = " Multicursor" },
         -- add
         ["<D-k>"] = {
           function()
@@ -314,7 +314,7 @@ return {
           end,
           desc = "󰞙 Add Cursor above",
         },
-        ["<Leader>mk"] = {
+        ["<Leader>Mk"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -332,7 +332,7 @@ return {
           end,
           desc = "󰞖 Add Cursor below",
         },
-        ["<Leader>mj"] = {
+        ["<Leader>Mj"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -342,7 +342,7 @@ return {
           desc = "󰞖 Add below <D-j>",
         },
         -- skip
-        ["<Leader>mK"] = {
+        ["<Leader>MK"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -351,7 +351,7 @@ return {
           end,
           desc = " Skip above",
         },
-        ["<Leader>mJ"] = {
+        ["<Leader>MJ"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -370,7 +370,7 @@ return {
           end,
           desc = "󰞘 Add Cursor next match",
         },
-        ["<Leader>mn"] = {
+        ["<Leader>Mn"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -388,7 +388,7 @@ return {
           end,
           desc = "󰞗 Add Cursor prev match",
         },
-        ["<Leader>mp"] = {
+        ["<Leader>Mp"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -398,7 +398,7 @@ return {
           desc = "󰞗 Add prev match <D-N>",
         },
         -- skip match
-        ["<Leader>mN"] = {
+        ["<Leader>MN"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -407,7 +407,7 @@ return {
           end,
           desc = " Skip next match",
         },
-        ["<Leader>mP"] = {
+        ["<Leader>MP"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -417,21 +417,21 @@ return {
           desc = " Skip prev match",
         },
         -- add all matches
-        ["<Leader>m*"] = {
+        ["<Leader>M*"] = {
           function() require("multicursor-nvim").matchAllAddCursors() end,
           desc = "󰎂 Add to every match",
         },
         -- resurrect cursors
-        ["<Leader>mu"] = {
+        ["<Leader>Mu"] = {
           function() require("multicursor-nvim").restoreCursors() end,
           desc = "󰑟 Restore deleted cursors",
         },
-        ["<Leader>mI"] = {
+        ["<Leader>MI"] = {
           function() require("multicursor-nvim").alignCursors() end,
           desc = " Align Cursors",
         },
         -- cycle
-        ["<Leader>m<Tab>"] = {
+        ["<Leader>M<Tab>"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -440,7 +440,7 @@ return {
           end,
           desc = "󱞯 Cycle forward",
         },
-        ["<Leader>m<S-Tab>"] = {
+        ["<Leader>M<S-Tab>"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -450,7 +450,7 @@ return {
           desc = "󱞹 Cycle backward",
         },
         -- freeze
-        ["<Leader>m<Leader>"] = {
+        ["<Leader>M<Leader>"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -460,7 +460,7 @@ return {
           desc = " Freeze Cursors",
         },
         -- add everywhere inside Text object
-        ["<Leader>mt"] = {
+        ["<Leader>Mt"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -470,7 +470,7 @@ return {
           desc = " Add inside Textobject",
         },
         -- take motion to mark word, motion to mark range, add every match
-        ["<Leader>mo"] = {
+        ["<Leader>Mo"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -479,7 +479,7 @@ return {
           end,
           desc = " ",
         },
-        ["<Leader>m/"] = {
+        ["<Leader>M/"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -554,6 +554,19 @@ return {
         ["<M-k>"] = { "dkPV']=V']", desc = "Move lines up reindented" },
         ["<M-j>"] = { "dpV']=V']", desc = "Move lines down reindented" },
 
+        -- Macros
+        ["<Leader>m"] = { desc = "󰁨 Macros" },
+        ["<Leader>mp"] = {
+          function()
+            if vim.bo.filetype == "lua" then
+              vim.cmd 'norm! yoprint("0: " .. 0)'
+            elseif vim.bo.filetype == "javascript" or vim.bo.filetype == "vue" then
+              vim.cmd 'norm! yoconsole.log("0:", 0)'
+            end
+          end,
+          desc = "print/log selection"
+        },
+
         -- AI
         ["<Leader>a"] = { desc = " AI features" },
         ["<Leader>ac"] = { function() vim.cmd "CodeCompanionChat Toggle" end, desc = "Open Chat window" },
@@ -572,9 +585,9 @@ return {
         ["<Leader>aa"] = { function() vim.cmd "CodeCompanionChat Add" end, desc = "Append selection to AI chat" },
 
         -- Multicursor
-        ["<Leader>m"] = { desc = " Multicursor" },
+        ["<Leader>M"] = { desc = " Multicursor" },
         -- rotate selected content
-        ["<Leader>mr"] = {
+        ["<Leader>Mr"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -583,7 +596,7 @@ return {
           end,
           desc = "󱞷 rotate selections forward",
         },
-        ["<Leader>mR"] = {
+        ["<Leader>MR"] = {
           function()
             local mc = require "multicursor-nvim"
             for i = 1, vim.v.count1 do
@@ -600,7 +613,7 @@ return {
           function() require("multicursor-nvim").appendVisual() end,
           desc = "Append at selection end",
         },
-        ["<Leader>ms"] = {
+        ["<Leader>Ms"] = {
           function() require("multicursor-nvim").splitCursors() end,
           desc = "Add Cursors at regex splits",
         },
