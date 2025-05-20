@@ -175,6 +175,13 @@ return {
         },
       },
       g = { -- vim.g.<key>
+        -- zef/vim-cycle no defaults
+        cycle_override_defaults = {
+          { "global", { "true", "false" } },
+          { "global", {"==", "!="} },
+          { "global", {"-=", "+="} },
+          { "global", {"&&", "||"} },
+        }
       },
     },
     -- setting a mapping to false will disable it
