@@ -129,6 +129,7 @@ local sharedKeybinds = {
     function() vim.cmd("ToggleTerm " .. vim.v.count .. " size=10 direction=horizontal") end,
     desc = "Toggle bottom terminal",
   },
+  ["<D-e>"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Neotree" },
 }
 
 ---@type LazySpec
