@@ -269,6 +269,23 @@ return {
           desc = "Init double term layout",
         },
 
+        -- Macros
+        ["<Leader>m"] = { desc = "󰁨 Macros" },
+        ["<Leader>mp"] = {
+          function()
+            if vim.bo.filetype == "lua" then
+              vim.cmd 'norm! yiwoprint("0: " .. 0)'
+            elseif vim.bo.filetype == "javascript" or vim.bo.filetype == "vue" then
+              vim.cmd 'norm! yiwoconsole.log("0:", 0)'
+            end
+          end,
+          desc = "print/log selection"
+        },
+        -- vue
+        ["<Leader>mv"] = { desc = "Vue" },
+        ["<Leader>mvc"] = { "aconst  = computed(() => {});<Left><Left><Left><CR><Up><Esc>^ela", desc = "computed property" },
+        ["<Leader>mvt"] = { "a$t('')<Left><Left>", desc = "translation" },
+
         -- AI
         ["<Leader>a"] = { desc = " AI features" },
         ["<Leader>ac"] = { function() vim.cmd "CodeCompanionChat Toggle" end, desc = "Open Chat window" },
