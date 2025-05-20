@@ -96,6 +96,9 @@ vim.api.nvim_create_user_command("SplitHtmlTag", SplitHtmlTag, {})
 -- matchit pack to jump to matching tag
 vim.cmd "packadd! matchit"
 
+-- dont just grey out every "unneccessary" code (can be large parts during coding)
+vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", {})
+
 -------------------------------------------------------- all modes --------------------------------------------------------
 local sharedKeybinds = {
   ["<C-Tab>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
