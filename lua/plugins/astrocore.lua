@@ -93,6 +93,7 @@ end
 -- Create a command ':SplitHtmlTag' to call the function
 vim.api.nvim_create_user_command("SplitHtmlTag", SplitHtmlTag, {})
 
+-- matchit pack to jump to matching tag
 vim.cmd "packadd! matchit"
 
 -------------------------------------------------------- all modes --------------------------------------------------------
