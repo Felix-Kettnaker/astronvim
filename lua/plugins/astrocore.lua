@@ -161,6 +161,7 @@ return {
         signcolumn = "yes",
         wrap = false,
         gdefault = true,
+        shell = "/opt/homebrew/bin/bash",
 
         clipboard = "", -- dd doesnt overwrite + register
         list = true,
