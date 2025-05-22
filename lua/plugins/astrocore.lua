@@ -178,7 +178,10 @@ return {
         -- zef/vim-cycle no defaults
         cycle_override_defaults = {
           { "global", { "true", "false" } },
+          { "global", {"<", ">"} },
           { "global", {"==", "!="} },
+          { "global", {"===", "!=="} },
+          { "global", {"<=", ">="} },
           { "global", {"-=", "+="} },
           { "global", {"&&", "||"} },
         }
