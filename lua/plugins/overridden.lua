@@ -6,7 +6,7 @@ return {
         auto_trigger = false,
         keymap = {
           accept = "<C-D-Space>",
-          accept_word = "<C-D-Return>",
+          accept_word = "<D-Right>",
           next = "<C-D-.>",
           prev = "<C-D-,>",
         },

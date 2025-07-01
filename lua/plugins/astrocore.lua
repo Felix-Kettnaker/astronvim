@@ -522,8 +522,8 @@ return {
         -- cmd-v in insert needs to work a little differently
         ["<D-v>"] = { "<C-r>+", desc = "Paste from clipboard" },
         -- movement in insert mode
-        ["<D-Right>"] = { "<Cmd>norm! $<CR>", desc = "Move to end of line" },
-        ["<D-Left>"] = { ">Cmd>norm! ^<CR>", desc = "Move to start of line" },
+        -- ["<D-Right>"] = { "<Cmd>norm! $<CR>", desc = "Move to end of line" }, -- deaktiviert wegen compilot mapping und geh doch normal mode
+        -- ["<D-Left>"] = { "<Cmd>norm! ^<CR>", desc = "Move to start of line" },
         ["<M-Right>"] = { "<Cmd>norm! w<CR>", desc = "Move to next word" },
         ["<M-Left>"] = { "<Cmd>norm! b<CR>", desc = "Move to previous word" },
 
