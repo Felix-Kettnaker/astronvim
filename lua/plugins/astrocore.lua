@@ -246,10 +246,8 @@ return {
         ["ü"] = { "%", desc = "Jump to matching bracket" },
 
         -- move lines
-        ["<M-Up>"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" }, -- option + k
-        ["<M-k>"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" }, -- option + k
-        ["<M-Down>"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" }, -- option + j
-        ["<M-j>"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" }, -- option + j
+        ["<M-Up>"] = { function() vim.cmd "normal! ddkP==" end, desc = "Move line up reindented" },
+        ["<M-Down>"] = { function() vim.cmd "normal! ddp==" end, desc = "Move line down reindented" },
 
         -- indent lines
         ["<Tab>"] = { ">>", desc = "Indent line" },
@@ -554,8 +552,8 @@ return {
         ["<S-Tab>"] = { "<gv", desc = "Unindent selection" },
 
         -- move lines in visual line mode
-        ["<M-k>"] = { "dkPV']=V']", desc = "Move lines up reindented" },
-        ["<M-j>"] = { "dpV']=V']", desc = "Move lines down reindented" },
+        ["<M-Up>"] = { "dkP=']V']", desc = "Move lines up reindented" },
+        ["<M-Down>"] = { "dp=']V']", desc = "Move lines down reindented" },
 
         -- Macros
         ["<Leader>m"] = { desc = "󰁨 Macros" },
