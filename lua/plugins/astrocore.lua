@@ -257,8 +257,8 @@ return {
         ["gV"] = { "v$h", desc = "Visual nutil EOL" },
 
         -- custom functions
-        -- opt shft a
-        ["Å"] = { function() vim.cmd "SplitHtmlTag" end, desc = "Break HTML Tag into multiple lines" },
+        ["<M-A>"] = { function() vim.cmd "SplitHtmlTag" end, desc = "Break HTML Tag into multiple lines" },
+        ["<M-a>"] = { "va<Jx", desc = "Join HTML tag to one line" },
 
         -- toggleterm
         ["<Leader>ti"] = {
